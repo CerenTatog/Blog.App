@@ -52,7 +52,6 @@
 				//Password: $('#Password').val()
 			};
 			HttpRequest.Post("/Account/RegisterUser", data, function (result) {
-				debugger;
 				ShowMessage(result.state, result.message);
 			});
 		}

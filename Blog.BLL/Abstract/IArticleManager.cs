@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.BLL.Helper;
 using Blog.Model.Models;
 using Blog.Model.ViewModels;
 
@@ -12,7 +13,7 @@ namespace Blog.BLL
     {
         ArticleViewModel GetArticle(int id);
         ArticleViewModel GetArticle(string url);
-        ArticleViewModel ArticleAddOrUpdateasDraft(ArticleViewModel model);
+		ServiceResult ArticleAddOrUpdateasDraft(ArticleCreateViewModel model);
         ArticleViewModel ArticleAddOrUpdateasPublished(Article model);
         bool DeleteArticle(int id);
         ArticleComments AddCommentArticle(CommentsViewModel model);
@@ -22,6 +23,7 @@ namespace Blog.BLL
         List<ArticleViewModel> GetArticleBySearchText(string searchText);
         List<ArticleViewModel> GetArticleByTagId(int tagId);
         List<TagViewModel> GetAllTags();
+        List<TagViewModel> GetTagsWithSearch(string text);
 
 	}
 }

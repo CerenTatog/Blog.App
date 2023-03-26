@@ -11,6 +11,7 @@ namespace Blog.Model.Models
         public string TagName { get; set; }
 
         public string SearchText { get; set; }
+        public string TagUrl { get; set; }
 
         public virtual ICollection<ArticleTag>? ArticleTags { get; set; }
 

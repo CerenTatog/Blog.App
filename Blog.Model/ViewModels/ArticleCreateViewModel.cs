@@ -7,10 +7,13 @@ using Blog.Model.Models;
 
 namespace Blog.Model.ViewModels
 {
-    public class ArticleCreateViewModel
+	public class ArticleCreateViewModel
 	{
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Tags { get; set; }
-    }
+		public int Id { get; set; }
+		public string? Title { get; set; }
+		public string? Content { get; set; }
+		public string? CoverPictureUrl { get; set; }
+		public string? Tags { get; set; }
+		public List<int>? TagIds { get; set; }
+	}
 }

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Blog.BLL\Blog.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>

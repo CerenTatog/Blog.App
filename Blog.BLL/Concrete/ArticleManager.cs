@@ -7,15 +7,20 @@ using Blog.BLL.Helper;
 using Blog.DAL.GenericRepository;
 using Blog.Model.Models;
 using Blog.Model.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Blog.BLL.Concrete
 {
 	public class ArticleManager : IArticleManager
 	{
 		private IUnitOfWork _db;
+		private readonly IHttpContextAccessor _contextAccessor;
+		private UserViewModel _currentUser;
 
-		public ArticleManager(IUnitOfWork db)
+		public ArticleManager(IUnitOfWork db, IHttpContextAccessor contextAccessor)
 		{
+			_contextAccessor = contextAccessor;
+			_currentUser = contextAccessor.HttpContext.Session.Get<UserViewModel>("user");
 			_db = db;
 		}
 		public ArticleComments AddCommentArticle(CommentsViewModel model)
@@ -28,22 +33,30 @@ namespace Blog.BLL.Concrete
 		}
 
 		//articlelist view model gelecek.
-		public ArticleViewModel ArticleAddOrUpdateasDraft(ArticleViewModel model)
+		public ServiceResult ArticleAddOrUpdateasDraft(ArticleCreateViewModel model)
 		{
-
 			Article article = _db.ArticleRepository.GetById(model.Id);
 			if (article == null)
 			{
+				article = new Article();
 				article.Title = model.Title;
-				article.CreatedDate = DateTime.Now;
 				article.Content = model.Content;
 				article.ArticleUrl = model.Title.GetArticleURL();
-
-
+				article.CoverPictureUrl = model.CoverPictureUrl;
+				article.UserId = _currentUser.Id;
+				article.CreatedBy = _currentUser.Id;
+				article.Status = ArticleStatusEnum.Draft;
+				foreach (var item in model.TagIds)
+				{
+					article.ArticleTags.Add(new ArticleTag()
+					{
+						TagId = item,
+						CreatedBy= _currentUser.Id
+					});
+				}
+				_db.ArticleRepository.Create(article);
 			}
-
-
-			throw new NotImplementedException();
+			return new ServiceResult();
 		}
 
 		public ArticleViewModel ArticleAddOrUpdateasPublished(Article model)
@@ -63,7 +76,8 @@ namespace Blog.BLL.Concrete
 
 		public bool DeleteArticle(int id)
 		{
-			throw new NotImplementedException();
+			_db.ArticleRepository.Delete(id);
+			return true;
 		}
 
 		public ArticleViewModel GetArticle(int id)
@@ -123,6 +137,8 @@ namespace Blog.BLL.Concrete
 		public List<ArticleViewModel> GetArticleByTagId(int tagId)
 		{
 			List<ArticleViewModel> articleList = new List<ArticleViewModel>();
+			//var sss = _db.ArticleRepository.GetAll().Where(x=> x.ArticleTags.Any(p=> p.TagId == tagId)).Select(x=> new );
+
 			var query = (from a in _db.ArticleRepository.GetAll()
 						 join at in _db.ArticleTagRepository.GetAll() on a.ID equals at.ArticleId
 						 join t in _db.TagRepository.GetAll() on at.TagId equals t.ID
@@ -182,7 +198,17 @@ namespace Blog.BLL.Concrete
 							   TagName = t.TagName
 						   }).ToList();
 			return tagList;
-						 
+
+		}
+
+		public List<TagViewModel> GetTagsWithSearch(string text)
+		{
+			var tagList = _db.TagRepository.GetAll().Where(x => x.TagName.Contains(text)).Select(x => new TagViewModel()
+			{
+				TagId = x.ID,
+				TagName = x.TagName
+			}).ToList();
+			return tagList;
 		}
 	}
 }

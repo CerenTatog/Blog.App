@@ -190,7 +190,6 @@
 			select: function (event, ui) {
 				$(this).parent().parent().find(".selected").append(newItem(ui.item));
 				$(this).val("");
-				//$(this).val("");
 				return false;
 			},
 			minLength: 1
@@ -202,18 +201,6 @@
 			sel = sel.splice(sel.indexOf(id), 1);
 			$("#tags").val(sel.join(","));
 		});
-
-		//function CreateArticle() {
-		//	var data = {
-		//		Content: CKEDITOR.instances['editor1'].getData(),
-		//		Tags: $('#tags').val(),
-		//		Title: $('#baslik').val()
-		//	};
-		//	HttpRequest.Post("/Article/CreateArticle", data, function (result) {
-		//		debugger;
-		//		ShowMessage(result.state, result.message);
-		//	});
-		//}
 
 		function CreateArticle() {
 
@@ -238,16 +225,11 @@
 				dataType: 'json',
 				contentType: false,
 				processData: false,
-				success: function (response) {
-					if (response != null) {
-						//$('#image_upload_preview').attr('src', response[0].FilePath);
-					}
-					else {
-						alert('No Response...!');
-					}
+				success: function (result) {
+					ShowMessage(result.state, result.message);
 				},
 				error: function (error) {
-					alert("error");
+					alert("HATA!!!");
 				}
 			});
 		}

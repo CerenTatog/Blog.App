@@ -56,8 +56,9 @@ namespace Blog.BLL
 			// session doldur
 			_contextAccessor.HttpContext.Session.Set<UserViewModel>("user", new UserViewModel()
 			{
-				Email= user.Email,
-				UserName= user.UserName,
+				Id = user.ID,
+				Email = user.Email,
+				UserName = user.UserName,
 				PictureUrl = user.PictureUrl,
 				ProfileDescription = user.ProfileDescription
 			});

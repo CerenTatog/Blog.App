@@ -1,5 +1,6 @@
 ﻿using Blog.BLL;
 using Blog.Model.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -9,9 +10,11 @@ namespace Blog.MVC.Controllers
 	public class ArticleController : Controller
 	{
 		private IArticleManager _articleManager;
-		public ArticleController(IArticleManager articleManager)
+		private readonly IWebHostEnvironment _webHostEnvironment;
+		public ArticleController(IArticleManager articleManager, IWebHostEnvironment webHostEnvironment)
 		{
 			_articleManager = articleManager;
+			_webHostEnvironment = webHostEnvironment;
 		}
 
 		public IActionResult Index()
@@ -87,31 +90,40 @@ namespace Blog.MVC.Controllers
 		[HttpPost]
 		public IActionResult GetTags(string key)
 		{
-			TempData["Tags"] = _articleManager.GetAllTags().Select(x => new SelectListItem()
+			var tagList = _articleManager.GetTagsWithSearch(key).Select(x => new SelectListItem()
 			{
 				Selected = false,
 				Text = x.TagName,
 				Value = x.TagId.ToString()
 
 			}).ToList();
-
-			var TagList = TempData["Tags"] as List<SelectListItem>;
-			var res = TagList.Where(x=> x.Text.Contains(key)).ToList();
-			return Json(res);
+			return Json(tagList);
 		}
-
-		//[HttpPost]
-		//public IActionResult CreateArticle([FromBody] ArticleCreateViewModel model)
-		//{
-		//	//var result = _accountManager.SignIn(model);
-		//	return Json("");
-		//}
 
 		[HttpPost]
 		public IActionResult CreateArticle(IFormFile file, string data)
 		{
+			string ext = Path.GetExtension(file.FileName);
+			string resimAd = Guid.NewGuid() + ext;
+			string dosyaYolu = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", resimAd);
+			using (var stream = new FileStream(dosyaYolu, FileMode.Create))
+			{
+				file.CopyTo(stream);
+			}
 			ArticleCreateViewModel formData = JsonConvert.DeserializeObject<ArticleCreateViewModel>(data);
-			return Json("");
+			List<int> tagIds = new List<int>();
+			if (!string.IsNullOrWhiteSpace(formData.Tags))
+			{
+				tagIds = formData.Tags.Split(',').ToList().Select(x => int.Parse(x)).ToList();
+			}
+			var result = _articleManager.ArticleAddOrUpdateasDraft(new ArticleCreateViewModel()
+			{
+				Title = formData.Title,
+				Content = formData.Content,
+				CoverPictureUrl = resimAd,
+				TagIds = tagIds
+			});
+			return Json(result);
 		}
 
 	}
