@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Blog.Model.ViewModels
 {
-	public class SelectTagViewModel
+	public class SelectTagUserViewModel
 	{
-		public SelectTagViewModel()
+		public SelectTagUserViewModel()
 		{
-			this.TagList = new List<TagViewModel>();
+			this.TagIds = new List<string>();
 		}
 		public int UserId { get; set; }
-		public List<TagViewModel> TagList { get; set; }
+		public List<string> TagIds { get; set; }
 	}
 }

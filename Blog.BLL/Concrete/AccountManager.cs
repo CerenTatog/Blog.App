@@ -8,6 +8,7 @@ using Blog.DAL.GenericRepository;
 using Blog.Model.ViewModels;
 using Blog.Model.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blog.BLL
 {
@@ -16,6 +17,7 @@ namespace Blog.BLL
 		private readonly IHttpContextAccessor _contextAccessor;
 		private IUnitOfWork _db;
 		private IMailService _mailService;
+		private UserViewModel _currentUser;
 		public AccountManager(IHttpContextAccessor contextAccessor, IUnitOfWork db, IMailService mailService)
 		{
 			_contextAccessor = contextAccessor;
@@ -23,27 +25,29 @@ namespace Blog.BLL
 			_mailService = mailService;
 		}
 
-		public ServiceResult<SelectTagViewModel> ActivatedMail(string guid)
+		public ServiceResult<ActivatedMailResponseViewModel> ActivatedMail(string guid)
 		{
 			var user = _db.UserRepository.GetAll().FirstOrDefault(x => x.ActivationGuid == guid);
 			if (user == null)
 			{
-				return new ServiceResult<SelectTagViewModel>(null, "Kullanıcı bulunamadı", ServiceResultState.ERROR);
+				return new ServiceResult<ActivatedMailResponseViewModel>(null, "Kullanıcı bulunamadı", ServiceResultState.ERROR);
 			}
 			if (user.IsEmailActivated)
 			{
-				return new ServiceResult<SelectTagViewModel>(null, "Aktivasyon işlemi daha önce yapılmıştır", ServiceResultState.WARNING);
+				return new ServiceResult<ActivatedMailResponseViewModel>(null, "Aktivasyon işlemi daha önce yapılmıştır", ServiceResultState.WARNING);
 			}
 			user.IsEmailActivated = true;
 			_db.UserRepository.Update(user);
-			var tagList = _db.TagRepository.GetAll().Select(x => new TagViewModel()
+			var tagList = _db.TagRepository.GetAll().Select(x => new SelectListItem()
 			{
-				TagId = x.ID,
-				TagName = x.TagName
+				Selected = false,
+				Text = x.TagName,
+				Value = x.ID.ToString()
 			}).ToList();
-			SelectTagViewModel result = new SelectTagViewModel();
+			ActivatedMailResponseViewModel result = new ActivatedMailResponseViewModel();
+			result.UserId = user.ID;
 			result.TagList = tagList;
-			return new ServiceResult<SelectTagViewModel>(result, "", ServiceResultState.SUCCESS);
+			return new ServiceResult<ActivatedMailResponseViewModel>(result, "", ServiceResultState.SUCCESS);
 		}
 
 		public ServiceResult SignInMail(string guid)
@@ -112,6 +116,27 @@ namespace Blog.BLL
 		public UserViewModel SignOut(UserViewModel uvm)
 		{
 			throw new NotImplementedException();
+		}
+
+		public ServiceResult AddUserTag(SelectTagUserViewModel model)
+		{
+			List<int> idList = model.TagIds.Select(x => int.Parse(x)).ToList();
+			foreach (var item in idList)
+			{
+				bool tagCheck = _db.UserTagRepository.GetAll().Any(x => x.TagId == item && x.UserId == model.UserId);
+				if (tagCheck)
+				{
+					continue;
+				}
+				UserTag userTag = new UserTag()
+				{
+					CreatedBy = model.UserId,
+					TagId = item,
+					UserId = model.UserId
+				};
+				_db.UserTagRepository.Create(userTag);
+			}
+			return new ServiceResult("İşlem başarılı. Giriş sayfasına yönlendiriliyorsunuz.");
 		}
 	}
 }

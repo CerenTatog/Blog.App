@@ -78,22 +78,23 @@ namespace Blog.MVC.Controllers
 
         public IActionResult SelectedTag()
         {
-			TempData["Tags"] = _articleManager.GetAllTags().Select(x => new SelectListItem()
+			var tagList = _articleManager.GetAllTags().Select(x => new SelectListItem()
 			{
 				Selected = false,
 				Text = x.TagName,
-                Value = x.TagId.ToString()
-            }).ToList();
+				Value = x.TagId.ToString()
 
-			var TagList = TempData["Tags"] as List<SelectListItem>;
-			var res = TagList.ToList();
-			return View(res);
+			}).ToList();
+			
+			return View(tagList);
 			
         }
 
-
-
-
-
-    }
+		[HttpPost]
+		public IActionResult SelectedTagUser([FromBody] SelectTagUserViewModel model)
+		{
+            var result = _accountManager.AddUserTag(model);
+			return Json(result);
+		}
+	}
 }

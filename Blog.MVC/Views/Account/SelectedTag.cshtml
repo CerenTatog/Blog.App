@@ -1,7 +1,8 @@
-﻿@model ActivatedMailResponseViewModel
+﻿@model List<SelectListItem>
 @{
 	Layout = "_EmptyLayout";
 }
+<link href="~/css/slick.css" rel="stylesheet" />
 <style>
 	.btn-tag {
 		background-color: #ECEFF1;
@@ -14,7 +15,47 @@
 			box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .25), 0 3px 10px 5px rgba(0, 0, 0, 0.05) !important;
 		}
 
+	.slick-center {
+		/*text-decoration: underline;
+		text-decoration-color: black;*/
+		padding-bottom: 10px;
+		border-bottom: 1px solid black;
+	}
+
+	.slick-slide {
+		outline: none
+	}
 </style>
+
+@*<div class="container">
+	<section class="" id="section-related-resources">
+
+		<style>
+			.btn-tag {
+				background-color: #ECEFF1;
+				text-transform: capitalize !important;
+				margin-bottom: 10px;
+				box-shadow: none;
+			}
+
+				.btn-tag:hover {
+					box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .25), 0 3px 10px 5px rgba(0, 0, 0, 0.05) !important;
+				}
+
+		</style>
+		<h2>Related resources</h2>
+		<div class="justify-content-start text-start w-100 my-5">
+
+			@foreach (var item in Model)
+			{
+				<a href="https://mdbootstrap.com/learn/mdb-foundations/bootstrap/badges/" class="btn btn-tag btn-rounded ripple-surface" data-mdb-close="true">
+					@item.Text
+				</a>
+			}
+		</div>
+	</section>
+</div>*@
+
 <section class="vh-100 d-flex justify-content-center align-items-center">
 	<div class="container">
 		<div class="row d-flex justify-content-center align-items-center h-100">
@@ -30,7 +71,7 @@
 							<h2>Lütfen İlgi Alanlarınızı Belirleyiniz</h2>
 							<div class="justify-content-start text-start w-100 my-5">
 
-								@foreach (var item in Model.TagList)
+								@foreach (var item in Model)
 								{
 									<a href='javascript:;' data-id="@item.Value" class="btn btn-tag btn-rounded ripple-surface selectableTag" data-mdb-close="true">
 										@item.Text <i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
@@ -49,6 +90,28 @@
 		</div>
 	</div>
 </section>
+
+<div class="tsettt">
+	@foreach (var item in Model)
+	{
+		<a href='javascript:;' data-id="@item.Value" style="text-align: center; color:black" class="btn-rounded ripple-surface" data-mdb-close="true">
+			@item.Text
+		</a>
+
+	}
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 
 @section Scripts {
 	<script>
@@ -78,18 +141,27 @@
 
 			});
 			var data = {
-				UserId: parseInt('@Model.UserId'),
-				TagIds: tagArray
+				UserId: 2,
+				TagIds: tagArray,
 			};
 			console.log(data);
 			HttpRequest.Post("/Account/SelectedTagUser", data, function (result) {
 				ShowMessage(result.state, result.message);
-				if (result.state == 1) {
-					setTimeout(() => {
-						window.location.href = "/Account/SignIn"
-					}, 3000);
-				}
 			});
 		}
+
+		$(document).ready(function () {
+			$('.tsettt').slick({
+				slidesToShow: 4,
+				slidesToScroll: 1,
+				arrows:false,
+				focusOnSelect: true,
+				centerMode: true,
+			});
+		});
+
 	</script>
+
+
+	<script src="~/js/slick.min.js"></script>
 }

@@ -9,7 +9,8 @@ namespace Blog.BLL
         ServiceResult SignIn(UserRegisterViewModel uvm);
         UserViewModel SignOut(UserViewModel uvm);
         ServiceResult Register(UserRegisterViewModel uvm);
-        ServiceResult<SelectTagViewModel> ActivatedMail(string guid);
+        ServiceResult<ActivatedMailResponseViewModel> ActivatedMail(string guid);
         ServiceResult SignInMail(string guid);
+        ServiceResult AddUserTag(SelectTagUserViewModel model);
 	}
 }

@@ -1,22 +1,40 @@
 ﻿using System.Diagnostics;
+using Blog.BLL;
 using Blog.BLL.Helper;
 using Blog.Model.ViewModels;
 using Blog.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blog.MVC.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
+		private IArticleManager _articleManager;
+		public HomeController(ILogger<HomeController> logger, IArticleManager articleManager)
 		{
 			_logger = logger;
+			_articleManager = articleManager;
 		}
 
 		public IActionResult Index()
 		{
+			var tagList = _articleManager.GetAllTags().Select(x => new SelectListItem()
+			{
+				Selected = false,
+				Text = x.TagName,
+				Value = x.TagId.ToString()
+
+			}).ToList();
+			tagList.Insert(0, new SelectListItem()
+			{
+				Selected = false,
+				Text = "Sizin İçin",
+				Value = "0"
+			});
+
+			TempData["TagList"] = tagList;
 			UserViewModel user = HttpContext.Session.Get<UserViewModel>("user");
 			if (user == null)
 			{
@@ -47,6 +65,12 @@ namespace Blog.MVC.Controllers
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+
+		[HttpPost]
+		public IActionResult GetArticleByTagId([FromBody] ArticleByTagViewModel model)
+		{
+			return ViewComponent("MyTagArticles", new {tagId = model.TagId});
 		}
 	}
 }

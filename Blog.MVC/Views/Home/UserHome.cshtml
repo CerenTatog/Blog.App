@@ -3,342 +3,38 @@
 @{
 	ViewData["Title"] = "Index";
 	Layout = "_UserSideLayout";
+	var tagList = TempData["TagList"] as List<SelectListItem>;
 	var user = Accessor.HttpContext.Session.Get<UserViewModel>("user");
 }
-<h1>@user.UserName</h1>
-<section id="hero">
-	<div class="hero-container">
-		<div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<link href="~/css/slick.css" rel="stylesheet" />
+<style>
+	.slick-center {
+		padding-bottom: 10px;
+		border-bottom: 1px solid black;
+	}
 
-			<ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
-
-			<div class="carousel-inner" role="listbox">
-
-				<!-- Slide 1 -->
-				<div class="carousel-item active" style="background-image: url(assets/img/slide/slide-1.jpg)">
-					<div class="carousel-container">
-						<div class="carousel-content">
-							<h2 class="animate__animated animate__fadeInDown">Welcome to <span>Eterna</span></h2>
-							<p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-							<a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-						</div>
-					</div>
-				</div>
-
-				<!-- Slide 2 -->
-				<div class="carousel-item" style="background-image: url(assets/img/slide/slide-2.jpg)">
-					<div class="carousel-container">
-						<div class="carousel-content">
-							<h2 class="animate__animated fanimate__adeInDown">Lorem <span>Ipsum Dolor</span></h2>
-							<p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-							<a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-						</div>
-					</div>
-				</div>
-
-				<!-- Slide 3 -->
-				<div class="carousel-item" style="background-image: url(assets/img/slide/slide-3.jpg)">
-					<div class="carousel-container">
-						<div class="carousel-content">
-							<h2 class="animate__animated animate__fadeInDown">Sequi ea <span>Dime Lara</span></h2>
-							<p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-							<a href="" class="btn-get-started animate__animated animate__fadeInUp">Read More</a>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-			</a>
-
-			<a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
-				<span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-			</a>
-			<div class="blog-pagination">
-				<ul class="justify-content-center">
-					<li><a href="#">1</a></li>
-					<li class="active"><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</section><!-- End Hero -->
-<br />
-<br />
-
-
-<section id="blog" class="blog">
-	<div class="container-lg mt-4" data-aos="fade-up">
-		<div class="row">
-			<div class="col-lg-12 entries">
-				<article class="entry mt-lg-5">
-					<h3>Trend Makaleler</h3>
-					<div class="container mt-3">
-						<div class="row">
-							<div class="col-4 mt-2">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="col-8">
-										<div class="d-flex w-100 justify-content-md-around px-2">
-											<img src="~/assets/img/team/team-1.jpg" style="width:40px; height:40px;" class="rounded-circle" />
-											<p class="mb-1 fw-bold align-self-center">Yazar Adı</p>
-										</div>
-									</div>
-									<h6 class="mb-1 ms-4">A step-by-step guide to building a chatbot based on your own documents with GPT -Makale-URL</h6>
-									<small class="ms-4">03.11.2023</small>
-								</a>
-								<small class="ms-4">6 dakika</small>
-							</div>
-							<div class="col-4">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="d-flex w-100 justify-content-between">
-
-										<h5 class="mb-1">List group item heading</h5>
-
-									</div>
-									<p class="mb-1">
-										Some placeholder content in a paragraph. Lorem dsfsd dsf sd
-										dsfdsf ds fsdf dsfds sdfsd dsfsd sdfsd sdf sdf  dsfsd ds fdsf ds f
-									</p>
-									<small>And some small print.</small>
-								</a>
-								<small>3 days ago</small>
-								<div class="read-more">
-									<a href="blog-single.html">Read More</a>
-								</div>
-							</div>
-							<div class="col-4">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="d-flex w-100 justify-content-between">
-
-										<h5 class="mb-1">List group item heading</h5>
-										<small>3 days ago</small>
-									</div>
-									<p class="mb-1">Some placeholder content in a paragraph.</p>
-									<small>And some small print.</small>
-								</a>
-								<div class="read-more">
-									<a href="blog-single.html">Read More</a>
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="row">
-							<div class="col-4 mt-2">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="col-8">
-										<div class="d-flex w-100 justify-content-md-around px-2">
-											<img src="~/assets/img/team/team-1.jpg" style="width:40px; height:40px;" class="rounded-circle" />
-											<p class="mb-1 fw-bold align-self-center">Yazar Adı</p>
-										</div>
-									</div>
-									<h6 class="mb-1 ms-4">A step-by-step guide to building a chatbot based on your own documents with GPT -Makale-URL</h6>
-									<small class="ms-4">03.11.2023</small>
-								</a>
-								<small class="ms-4">6 dakika</small>
-							</div>
-							<div class="col-4">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="d-flex w-100 justify-content-between">
-
-										<h5 class="mb-1">List group item heading</h5>
-
-									</div>
-									<p class="mb-1">
-										Some placeholder content in a paragraph. Lorem dsfsd dsf sd
-										dsfdsf ds fsdf dsfds sdfsd dsfsd sdfsd sdf sdf  dsfsd ds fdsf ds f
-									</p>
-									<small>And some small print.</small>
-								</a>
-								<small>3 days ago</small>
-								<div class="read-more">
-									<a href="blog-single.html">Read More</a>
-								</div>
-							</div>
-							<div class="col-4">
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div class="d-flex w-100 justify-content-between">
-
-										<h5 class="mb-1">List group item heading</h5>
-										<small>3 days ago</small>
-									</div>
-									<p class="mb-1">Some placeholder content in a paragraph.</p>
-									<small>And some small print.</small>
-								</a>
-								<div class="read-more">
-									<a href="blog-single.html">Read More</a>
-								</div>
-							</div>
-						</div>
-						<hr />
-					</div>
-				</article><!-- End blog entry -->
-			</div><!-- End blog entries list -->
-		</div>
-	</div>
-</section>
-
+	.slick-slide {
+		outline: none
+	}
+</style>
 <section id="blog" class="blog">
 	<div class="container" data-aos="fade-up">
+		<div class="tsettt" style="max-width: 66%;">
+			@foreach (var item in tagList)
+			{
+				<a href='javascript:;' data-id="@item.Value" onclick="GetArticles(@item.Value)" style="text-align: center; color:black" class="btn-rounded ripple-surface userTag" data-mdb-close="true">
+					@item.Text
+				</a>
+			}
+		</div>
+		<br />
 		<div class="row">
 			<div class="col-lg-8">
-				<div class="card" style="border:hidden">
-					<div class="card-header" style="padding-bottom: initial; border:hidden">
-						<div class="row">
-							<div class="col-2">
-								<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="36" height="36" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
-							</div>
-							<div class="col-10">
-								<h6 style="margin-left: -16%; margin-top: 1%;" class="align-item-center">
-									Ceren Tatoğlu
-								</h6>
-							</div>
-						</div>
-					</div>
-					<div class="row g-0">
-						<div class="col-md-10">
-							<div class="card-body">
-								<h5 class="card-title fw-bold">
-									Card title Card title Card title
-								</h5>
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-							</div>
-						</div>
-						<div class="col-md-2" style="margin-top:4%">
-							<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="112" height="112" loading="lazy">
-							@*<img src="..." class="img-fluid rounded-start" alt="...">*@
-						</div>
-					</div>
-					<div class="card-footer text-muted" style="border:hidden;background-color:white">
-						<span style="cursor:pointer" class="badge rounded-pill bg-light text-dark">Sağlıklı Yaşam</span>
-						<span class="badge rounded-pill bg-light text-dark">5 dk. Okuma Süresi</span>
-					</div>
+			<div id="myTagArticle">
+				@await Component.InvokeAsync("MyTagArticles")
 				</div>
-				<hr />
-				<br />
-				<div class="card" style="border:hidden">
-					<div class="card-header" style="padding-bottom: initial; border:hidden">
-						<div class="row">
-							<div class="col-2">
-								<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="36" height="36" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
-							</div>
-							<div class="col-10">
-								<h6 style="margin-left: -16%; margin-top: 1%;" class="align-item-center">
-									Ceren Tatoğlu
-								</h6>
-							</div>
-						</div>
-					</div>
-					<div class="row g-0">
-						<div class="col-md-10">
-							<div class="card-body">
-								<h5 class="card-title fw-bold">Card title</h5>
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-							</div>
-						</div>
-						<div class="col-md-2" style="margin-top:4%">
-							<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="112" height="112" loading="lazy">
-							@*<img src="..." class="img-fluid rounded-start" alt="...">*@
-						</div>
-					</div>
-					<div class="card-footer text-muted" style="border:hidden;background-color:white">
-						<span style="cursor:pointer" class="badge rounded-pill bg-light text-dark">Sağlıklı Yaşam</span>
-						<span class="badge rounded-pill bg-light text-dark">5 dk. Okuma Süresi</span>
-					</div>
-				</div>
-				<hr />
-				<br />
-				<div class="card" style="border:hidden">
-					<div class="card-header" style="padding-bottom: initial; border:hidden">
-						<div class="row">
-							<div class="col-2">
-								<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="36" height="36" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
-							</div>
-							<div class="col-10">
-								<h6 style="margin-left: -16%; margin-top: 1%;" class="align-item-center">
-									Ceren Tatoğlu
-								</h6>
-							</div>
-						</div>
-					</div>
-					<div class="row g-0">
-						<div class="col-md-10">
-							<div class="card-body">
-								<h5 class="card-title fw-bold">Card title</h5>
-								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-							</div>
-						</div>
-						<div class="col-md-2" style="margin-top:4%">
-							<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="112" height="112" loading="lazy">
-							@*<img src="..." class="img-fluid rounded-start" alt="...">*@
-						</div>
-					</div>
-					<div class="card-footer text-muted" style="border:hidden;background-color:white">
-						<span style="cursor:pointer" class="badge rounded-pill bg-light text-dark">Sağlıklı Yaşam</span>
-						<span class="badge rounded-pill bg-light text-dark">5 dk. Okuma Süresi</span>
-					</div>
-				</div>
-				@*<div class="m-4">
-					<div class="row row-cols-1 row-cols-md-2 g-4">
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>*@
 			</div>
-
 			<div class="col-lg-4">
-
 				<div class="sidebar">
 
 					<h3 class="sidebar-title">Search</h3>
@@ -416,10 +112,54 @@
 
 			</div><!-- End blog sidebar -->
 		</div>
+
+		
+		
 	</div>
 </section><!-- End Blog Section -->
 @section Scripts {
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
+	<script>
+		$(document).ready(function () {
+			$('.tsettt').slick({
+				slidesToShow: 3,
+				slidesToScroll: 1,
+				arrows: false,
+				//focusOnSelect: true,
+				//centerMode: true,
+			});
+		});
+
+		$(".userTag").click(function () {
+
+			$(".userTag").each(function (index, element) {
+				$(element).removeClass("slick-center");
+			});
+
+			var el = $(this)[0];
+			$(el).addClass("slick-center");
+		});
+
+		function GetArticles(tagId) {
+			var obj = {
+				TagId: parseInt(tagId),
+			};
+			$.ajax({
+				url: "/Home/GetArticleByTagId",
+				data: JSON.stringify(obj),
+				type: "POST",
+				contentType: "application/json;charset=utf-8",
+				success: function (result) {
+					$("#myTagArticle").html(result);
+				},
+				error: function (errormessage) {
+					alert(errormessage.responseText);
+				},
+			});
+		}
+
+	</script>
+	<script src="~/js/slick.min.js"></script>
 }
