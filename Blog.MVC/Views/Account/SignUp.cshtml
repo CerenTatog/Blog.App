@@ -1,0 +1,60 @@
+﻿@model UserRegisterViewModel
+@{
+	Layout = "_EmptyLayout";
+}
+
+<section class="vh-100 d-flex justify-content-center align-items-center">
+	<div class="container">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-12 col-md-8 col-lg-6">
+				<div class="card text-black">
+					<div class="card-body p-5">
+						@*<p class=">*@
+							<div class="logo justify-content-center align-items-center">
+								<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4"><a asp-action="Index" asp-controller="Home">ForeSight</a></h1>
+							</div>
+
+						</p>
+						<form class="mx-1 mx-md-4">
+							<div class="d-flex flex-row align-items-center mb-4">
+								<i class="fas fa-envelope fa-lg me-3 fa-fw" style="margin-top:2rem"></i>
+								<div class="form-outline flex-fill mb-0">
+									<label class="form-label" for="form3Example3c">E-mail Adresiniz</label>
+									<input asp-for="Email" type="email" id="Email" class="form-control" />
+								</div>
+							</div>
+							<br />
+							<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+								<button type="button" onclick="Register()" class="btn btn-outline-dark btn-lg">Hesap oluştur</button>
+							</div>
+							<div>
+								<p class="mb-0 text-center">
+									Zaten üye misiniz? <a href="signup.html" class="text-primary fw-bold">
+										Giriş Yap
+									</a>
+								</p>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+@section Scripts
+	{
+	<script>
+		function Register() {
+			var data = {
+				//UserName: $('#UserName').val(),
+				Email: $('#Email').val(),
+				//Password: $('#Password').val()
+			};
+			HttpRequest.Post("/Account/RegisterUser", data, function (result) {
+				debugger;
+				ShowMessage(result.state, result.message);
+			});
+		}
+	</script>
+}

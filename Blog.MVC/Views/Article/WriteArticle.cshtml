@@ -1,0 +1,256 @@
+﻿@model ArticleViewModel
+@{
+	Layout = "_UserSideLayout";
+}
+<style>
+	.selected {
+		margin: 3px;
+	}
+
+	.selected-item {
+		border: 1px solid #000;
+		border-radius: 6px;
+		padding: 3px;
+		background: white;
+		margin: 3px;
+	}
+
+		.selected-item .btn-close {
+			margin-left: 6px;
+		}
+
+	.avatar-upload {
+		position: relative;
+		margin: 50px auto;
+	}
+
+		.avatar-upload .avatar-edit {
+			position: absolute;
+			/*right: 12px;*/
+			z-index: 1;
+			top: -44px;
+		}
+
+			.avatar-upload .avatar-edit input {
+				display: none;
+			}
+
+				.avatar-upload .avatar-edit input + label {
+					display: inline-block;
+					width: 34px;
+					height: 34px;
+					margin-bottom: 0;
+					background: #FFFFFF;
+					border: 1px solid transparent;
+					box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+					cursor: pointer;
+					font-weight: normal;
+					transition: all 0.2s ease-in-out;
+				}
+
+					.avatar-upload .avatar-edit input + label:hover {
+						background: #f1f1f1;
+						border-color: #d6d6d6;
+					}
+
+					.avatar-upload .avatar-edit input + label:after {
+						content: "\f040";
+						font-family: 'FontAwesome';
+						color: #757575;
+						position: absolute;
+						top: 10px;
+						left: 0;
+						right: 0;
+						text-align: center;
+						margin: auto;
+					}
+
+		.avatar-upload .avatar-preview {
+			width: 300px;
+			height: 300px;
+			position: relative;
+			
+			border: 6px solid #F8F8F8;
+			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+		}
+
+			.avatar-upload .avatar-preview > div {
+				width: 100%;
+				height: 100%;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+</style>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/samples/js/sample.js"></script>
+<div class="container mt-4 mb-4">
+	<div class="row justify-content-md-center">
+		<div class="col-md-12 col-lg-8">
+			<h1 class="h2 mb-4">Submit issue</h1>
+			<div class="form-group">
+				<label for="name">Başlık</label>
+				<input type="text" class="form-control" id="baslik" placeholder="Başlık">
+			</div>
+
+			<div class="form-group">
+				<label>İçerik</label>
+				@Html.TextAreaFor(model => model.Content, new { @id = "editor1" })
+			</div>
+
+			<div class="form-group">
+				<label for="phone">Tag</label>
+				<input type="hidden" class="hidden_value" name="tags" id="tags" />
+				<input id="basicAutoComplete" class="form-control" type="text" autocomplete="off">
+			</div>
+
+			<div style="margin-top:2%" class="selected"></div>
+
+			<div class="form-group" style="margin-top:3%">
+				<label for="phone">Kapak Görseli</label>
+			</div>
+
+			<div class="avatar-upload">
+				<div class="avatar-edit">
+					<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+					<label for="imageUpload"></label>
+				</div>
+				<div class="avatar-preview">
+					<div id="imagePreview">
+					</div>
+				</div>
+			</div>
+
+			
+			
+
+			<hr>
+			<button type="button" onclick="CreateArticle()" class="btn btn-primary">Submit</button>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+	{
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+					$('#imagePreview').hide();
+					$('#imagePreview').fadeIn(650);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#imageUpload").change(function () {
+			readURL(this);
+		});
+
+		var editor = CKEDITOR.instances['editor1'];
+		if (editor) { editor.destroy(true); }
+		CKEDITOR.replace('editor1', {
+			enterMode: CKEDITOR.ENTER_BR,
+		});
+
+		function newItem(it) {
+			var item = $("<span>", {
+				class: "selected-item",
+				"data-id": it.value
+			}).html(it.label);
+			$("<span>", {
+				class: "btn-close"
+			}).appendTo(item);
+			if ($("#tags").val().length > 0) {
+				$("#tags").val($("#tags").val() + "," + it.value);
+			} else {
+				$("#tags").val(it.value);
+			}
+			return item;
+		}
+
+		$("#basicAutoComplete").autocomplete({
+			source: function (request, response) {
+				$.ajax({
+					url: "/Article/GetTags/",
+					type: "POST",
+					dataType: "json",
+					data: { key: request.term },
+					success: function (data) {
+						response($.map(data, function (item) {
+							return {
+								label: item.text, value: item.value
+							};
+						}))
+					}
+				})
+			},
+			select: function (event, ui) {
+				$(this).parent().parent().find(".selected").append(newItem(ui.item));
+				$(this).val("");
+				//$(this).val("");
+				return false;
+			},
+			minLength: 1
+		});
+		$(".selected").on("click", ".btn-close", function () {
+			var id = $(this).parent().data("id");
+			$(this).parent().remove();
+			var sel = $("#tags").val().split(",");
+			sel = sel.splice(sel.indexOf(id), 1);
+			$("#tags").val(sel.join(","));
+		});
+
+		//function CreateArticle() {
+		//	var data = {
+		//		Content: CKEDITOR.instances['editor1'].getData(),
+		//		Tags: $('#tags').val(),
+		//		Title: $('#baslik').val()
+		//	};
+		//	HttpRequest.Post("/Article/CreateArticle", data, function (result) {
+		//		debugger;
+		//		ShowMessage(result.state, result.message);
+		//	});
+		//}
+
+		function CreateArticle() {
+
+			var data = {
+				Content: CKEDITOR.instances['editor1'].getData(),
+				Tags: $('#tags').val(),
+				Title: $('#baslik').val()
+			}
+			var formData = new FormData();
+
+			formData.append("data", JSON.stringify(data));
+
+			var totalFiles = document.getElementById('imageUpload').files.length;
+			for (var i = 0; i < totalFiles; i++) {
+				var file = document.getElementById('imageUpload').files[i];
+				formData.append("file", file);
+			}
+			$.ajax({
+				type: "POST",
+				url: '/Article/CreateArticle',
+				data: formData,
+				dataType: 'json',
+				contentType: false,
+				processData: false,
+				success: function (response) {
+					if (response != null) {
+						//$('#image_upload_preview').attr('src', response[0].FilePath);
+					}
+					else {
+						alert('No Response...!');
+					}
+				},
+				error: function (error) {
+					alert("error");
+				}
+			});
+		}
+
+	</script>
+}
