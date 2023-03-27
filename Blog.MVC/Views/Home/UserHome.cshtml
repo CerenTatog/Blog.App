@@ -3,7 +3,7 @@
 @{
 	ViewData["Title"] = "Index";
 	Layout = "_UserSideLayout";
-	var tagList = TempData["TagList"] as List<SelectListItem>;
+	var tagList = ViewBag["TagList"] as List<SelectListItem>;
 	var user = Accessor.HttpContext.Session.Get<UserViewModel>("user");
 }
 <link href="~/css/slick.css" rel="stylesheet" />

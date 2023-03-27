@@ -18,13 +18,15 @@ namespace Blog.Model.ViewModels
         public int ReadTime { get; set; }
         public int UserId { get; set; }
         public string AuthorName { get; set; }
+
+        public string UserPicUrl { get; set; }
         public string ArticleUrl { get; set; }
         public string? CoverPictureUrl { get; set; }
         public ArticleStatusEnum Status { get; set; }
         public int Likes { get; set; }
         public List<ArticleLike>? LikeList { get; set; }
-        public List<Tag>? ArticleTags { get; set; }
-        public List<ArticleComments>? ArticleComments { get; set; }
+        public List<TagViewModel>? ArticleTags { get; set; }
+        //public List<ArticleComments>? ArticleComments { get; set; }
 
         public DateTime? UpdatedTime { get; set; }
         public DateTime? CreatedTime { get; set; }

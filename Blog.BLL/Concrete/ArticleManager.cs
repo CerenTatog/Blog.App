@@ -89,7 +89,7 @@ namespace Blog.BLL.Concrete
 					ArticleId = article.ID,
 					CreatedBy = _currentUser.Id
 				};
-				_db.ArticleTagRepository.Create(newTag);//ok
+				_db.ArticleTagRepository.Create(newTag);
 			}
 			return new ServiceResult();
 		}
@@ -171,11 +171,16 @@ namespace Blog.BLL.Concrete
 						   where (a.Status == ArticleStatusEnum.Published && a.ID == id)
 						   select new ArticleViewModel
 						   {
-							   Title = a.Title,
-							   Content = a.Content,
-							   ReadTime = a.ReadTime,
-							   CoverPictureUrl = a.CoverPictureUrl,
 							   UserId = a.UserId,
+							   AuthorName = a.User.UserName,
+							   ArticleTags = a.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+							   Title = a.Title,
+							   Summary = a.Summary.ContentFormat(100),
+							   ReadCount = a.ReadCount,
+							   ReadTime = a.ReadTime,
+							   Likes = a.Likes.Count(),
+							   UserPicUrl = a.User.PictureUrl,
+							   CoverPictureUrl = a.CoverPictureUrl
 
 						   }).FirstOrDefault();
 			return article;
@@ -187,16 +192,22 @@ namespace Blog.BLL.Concrete
 						   where (a.Status == ArticleStatusEnum.Published && a.IsDeleted == false && a.ArticleUrl == url)
 						   select new ArticleViewModel
 						   {
-							   Title = a.Title,
-							   Content = a.Content,
-							   ReadTime = a.ReadTime,
-							   CoverPictureUrl = a.CoverPictureUrl,
 							   UserId = a.UserId,
+							   AuthorName = a.User.UserName,
+							   ArticleTags = a.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+							   Title = a.Title,
+							   Summary = a.Summary.ContentFormat(100),
+							   ReadCount = a.ReadCount,
+							   ReadTime = a.ReadTime,
+							   Likes = a.Likes.Count(),
+							   UserPicUrl = a.User.PictureUrl,
+							   CoverPictureUrl = a.CoverPictureUrl
 
 						   }).FirstOrDefault();
 			return article;
 		}
 
+		//bakılması lazım. 
 		public List<ArticleViewModel> GetArticleBySearchText(string searchText)
 		{
 			List<ArticleViewModel> articleList = new List<ArticleViewModel>();
@@ -226,9 +237,10 @@ namespace Blog.BLL.Concrete
 			{
 				ArticleId = x.ID,
 				UserId = x.UserId,
+				UserName = x.User.UserName,
 				Tags = x.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
 				Title = x.Title,
-				Content = x.Content.ContentFormat(100),
+				Summary = x.Summary.ContentFormat(100),
 				ReadCount = x.ReadCount,
 				ReadTime = x.ReadTime,
 				Likes = x.Likes.Count(),
@@ -247,12 +259,17 @@ namespace Blog.BLL.Concrete
 		{
 			var mostReadingList = _db.ArticleRepository.GetAll().Where(x => x.Status == ArticleStatusEnum.Published).Select(x => new ArticleViewModel()
 			{
-				Title = x.Title,
-				Content = x.Content,
-				ReadTime = x.ReadTime,
-				CoverPictureUrl = x.CoverPictureUrl,
 				UserId = x.UserId,
-				ReadCount = x.ReadCount
+				AuthorName = x.User.UserName,
+				ArticleTags = x.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+				Title = x.Title,
+				Summary = x.Summary.ContentFormat(100),
+				ReadCount = x.ReadCount,
+				ReadTime = x.ReadTime,
+				Likes = x.Likes.Count(),
+				UserPicUrl = x.User.PictureUrl,
+				CoverPictureUrl = x.CoverPictureUrl
+
 			}).OrderByDescending(x => x.ReadCount).Take(5).ToList();
 			return mostReadingList;
 		}
@@ -263,10 +280,17 @@ namespace Blog.BLL.Concrete
 									  where ar.Status == ArticleStatusEnum.Published
 									  select new ArticleViewModel
 									  {
+										  UserId = ar.UserId,
+										  AuthorName = ar.User.UserName,
+										  ArticleTags = ar.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
 										  Title = ar.Title,
-										  Content = ar.Content,
-										  Likes = ar.Likes.Count()
-									  }).OrderByDescending(x => x.Likes).Take(5).ToList();
+										  Summary = ar.Summary.ContentFormat(100),
+										  ReadCount = ar.ReadCount,
+										  ReadTime = ar.ReadTime,
+										  Likes = ar.Likes.Count(),
+										  UserPicUrl = ar.User.PictureUrl,
+										  CoverPictureUrl = ar.CoverPictureUrl
+									  }).OrderByDescending(x => x.Likes).Take(6).ToList();
 
 
 			return popularArticleList;
@@ -292,6 +316,28 @@ namespace Blog.BLL.Concrete
 				TagName = x.TagName
 			}).ToList();
 			return tagList;
+		}
+
+		public List<ArticleViewModel> GetLatestArtciles()
+		{
+			var latesArticleList = (from ar in _db.ArticleRepository.GetAll()
+									where ar.Status == ArticleStatusEnum.Published
+									select new ArticleViewModel
+									{
+										UserId = ar.UserId,
+										AuthorName = ar.User.UserName,
+										ArticleTags = ar.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+										Title = ar.Title,
+										Summary = ar.Summary.ContentFormat(100),
+										ReadCount = ar.ReadCount,
+										ReadTime = ar.ReadTime,
+										Likes = ar.Likes.Count(),
+										UserPicUrl = ar.User.PictureUrl,
+										CoverPictureUrl = ar.CoverPictureUrl
+									}).OrderByDescending(x => x.Likes).Take(5).ToList();
+
+
+			return latesArticleList;
 		}
 	}
 }

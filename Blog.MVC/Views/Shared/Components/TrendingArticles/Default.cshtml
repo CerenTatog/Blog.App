@@ -1,10 +1,32 @@
-﻿
+﻿@*@model IEnumerable<ArticleViewModel>
 
-<div class="card text-white" style="width: 350px;">
-    <img src="images/sample.svg" class="card-img-top" alt="...">
-    <div class="card-img-overlay">
-        <h5 class="card-title">Alice Liddel</h5>
-        <p class="card-text">Alice is a freelance web designer and developer based in London. She is specialized in HTML5, CSS3, JavaScript, Bootstrap, etc.</p>
-        <a href="#" class="btn btn-primary stretched-link">View Profile</a>
+<section id="testimonials" class="testimonials">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4">
+                    <div class="testimonial-item">
+                        <img src="~/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img rounded-circle" alt="">
+                        <h4>@item.AuthorName</h4>
+                        <br />
+                        <h6 class="fw-bold">@item.Title</h6>
+                        <span style="font-size:smaller">
+                            @item.Summary
+                        </span>
+                        <div class="row">
+                            <div class="col-8">
+                                <small class="" style="font-size:x-small">@item.CreatedTime</small>
+                                <small class="" style="font-size:x-small">&#9830</small>
+                                <small class="" style="font-size:x-small"> Okuma Süresi: @item.ReadTime dk</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+
     </div>
-</div>
+</section>*@<!-- End Testimonials Section -->

@@ -36,10 +36,10 @@ namespace Blog.BLL
                                           ArticleUrl = a.ArticleUrl,
                                           CoverPictureUrl = a.CoverPictureUrl,
                                           CreatedTime = a.CreatedDate,
-                                          ArticleTags = a.ArticleTags.Select(x => new Tag
-                                          {
-                                              TagName = x.Tag.TagName
-                                          }).ToList(),
+                                          //ArticleTags = a.ArticleTags.Select(x => new Tag
+                                          //{
+                                          //    TagName = x.Tag.TagName
+                                          //}).ToList(),
                                           Content = a.Content,
                                           Likes = a.Likes.Count(),
                                           ReadCount = a.ReadCount,
@@ -154,11 +154,8 @@ namespace Blog.BLL
                                          Content = a.Content,
                                          CoverPictureUrl = a.CoverPictureUrl,
                                          ReadCount = a.ReadCount,
-                                         ArticleTags = a.ArticleTags.Select(x => new Tag()
-                                         {
-                                             TagName = x.Tag.TagName
-                                         }).ToList()
-                                     }).OrderBy(x => x.UpdatedTime ?? x.CreatedTime).ToList();
+										 ArticleTags = a.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+									 }).OrderBy(x => x.UpdatedTime ?? x.CreatedTime).ToList();
             return articleListByUser;
         }
     }

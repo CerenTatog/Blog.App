@@ -20,6 +20,7 @@ namespace Blog.BLL
 
         List<ArticleViewModel> GetMostReadArticles();
         List<ArticleViewModel> GetPopularArticles();
+        List<ArticleViewModel> GetLatestArtciles();
         List<ArticleViewModel> GetArticleBySearchText(string searchText);
         List<ArticleByTagViewModel> GetArticleByTagId(int tagId);
         List<TagViewModel> GetAllTags();

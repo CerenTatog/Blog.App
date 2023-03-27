@@ -72,5 +72,12 @@ namespace Blog.MVC.Controllers
 		{
 			return ViewComponent("MyTagArticles", new {tagId = model.TagId});
 		}
+
+		//[HttpPost]
+		//public IActionResult GetTrendArticles()
+		//{
+		//	return ViewComponent("Trending Articles");
+		//}
+
 	}
 }
