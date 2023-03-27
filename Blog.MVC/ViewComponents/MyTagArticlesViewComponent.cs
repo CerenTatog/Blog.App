@@ -12,9 +12,9 @@ namespace Blog.MVC.ViewComponents
 			_articleManager = articleManager;
 		}
 
-		public async Task<IViewComponentResult> InvokeAsync(int tagId=0)
+		public async Task<IViewComponentResult> InvokeAsync(int tagId)
 		{
-			var list = _articleManager.GetMostReadArticles();
+			var list = _articleManager.GetArticleByTagId(tagId);
 
 			return View(list);
 		}

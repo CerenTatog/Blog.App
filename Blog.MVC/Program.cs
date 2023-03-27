@@ -50,6 +50,10 @@ namespace Blog.MVC
 				pattern: "account/signinmail/{guid}",
 				defaults: new { controller = "Account", action = "SignInMail" });
 
+            //app.MapControllerRoute(name: "articleTagUrl",
+            //    pattern: "article/tag/{tagUrl}",
+            //    defaults: new {controller = "Home", action = "Index"}
+            //    );
 			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

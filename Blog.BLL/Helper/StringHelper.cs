@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -23,7 +24,7 @@ namespace Blog.BLL.Helper
 			return userUrl;
 		}
 
-		//burada bir id eklemesi de yapmak gerekir mi url'de?
+		
 		public static string GetArticleURL(this string title)
 		{
 			title = title.ToLower().Replace(' ', '-');
@@ -31,10 +32,21 @@ namespace Blog.BLL.Helper
 			return title;
 		}
 
-		public static string ContentFormat(this string content)
+		public static string ContentFormat(this string content, int lenght)
 		{
-			string newContent = content.Substring(100);
+			
+			string cleanText = Regex.Replace(content, "<.*?>", string.Empty).Replace("&nbsp;", "").Replace("&nbsp", "").Replace("&", " ");
+			string newContent = cleanText.Substring(0,lenght);
 			return newContent;
 		}
+
+		public static string GetTagUrl(this string tag)
+		{
+			tag = tag.ToLower().Replace(' ', '-');
+			tag = String.Join("", tag.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ı", "i");
+			return tag;
+		}
+
+
 	}
 }

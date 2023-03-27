@@ -46,30 +46,115 @@ namespace Blog.BLL.Concrete
 				article.UserId = _currentUser.Id;
 				article.CreatedBy = _currentUser.Id;
 				article.Status = ArticleStatusEnum.Draft;
+				article.ReadTime = model.ReadTime;
+				article.Summary = model.Summary;
 				foreach (var item in model.TagIds)
 				{
 					article.ArticleTags.Add(new ArticleTag()
 					{
 						TagId = item,
-						CreatedBy= _currentUser.Id
+						CreatedBy = _currentUser.Id
 					});
 				}
 				_db.ArticleRepository.Create(article);
+				return new ServiceResult();
+			}
+			article.Title = model.Title;
+			article.Content = model.Content;
+			article.ArticleUrl = model.Title.GetArticleURL();
+			article.CoverPictureUrl = model.CoverPictureUrl;
+			article.UserId = _currentUser.Id;
+			article.UpdatedBy = _currentUser.Id;
+			article.Status = ArticleStatusEnum.Draft;
+			article.ReadTime = model.ReadTime;
+			article.Summary = model.Summary;
+			//tagler silinip tekrar eklenecek.
+			if (model.TagIds != null)
+			{
+				foreach (var item in model.TagIds)
+				{
+					var artigleTagList = article.ArticleTags.ToList();
+					foreach (var deletedTag in artigleTagList)
+					{
+						_db.ArticleTagRepository.Delete(deletedTag);
+					}
+				}
+			}
+
+			foreach (var item in model.TagIds)
+			{
+				ArticleTag newTag = new ArticleTag()
+				{
+					TagId = item,
+					ArticleId = article.ID,
+					CreatedBy = _currentUser.Id
+				};
+				_db.ArticleTagRepository.Create(newTag);//ok
 			}
 			return new ServiceResult();
 		}
 
-		public ArticleViewModel ArticleAddOrUpdateasPublished(Article model)
+		//varsa update alanı olacak.
+		public ServiceResult ArticleAddOrUpdateasPublished(ArticleCreateViewModel model)
 		{
-			ArticleViewModel avm = new ArticleViewModel();
-			Article article = _db.ArticleRepository.GetById(model.ID);
+			Article article = _db.ArticleRepository.GetById(model.Id);
 			if (article == null)
 			{
-
+				article = new Article();
+				article.Title = model.Title;
+				article.Content = model.Content;
+				article.ArticleUrl = model.Title.GetArticleURL();
+				article.CoverPictureUrl = model.CoverPictureUrl;
+				article.UserId = _currentUser.Id;
+				article.CreatedBy = _currentUser.Id;
+				article.Status = ArticleStatusEnum.Published;
+				article.ReadTime = model.ReadTime;
+				article.Summary = model.Summary;
+				foreach (var item in model.TagIds)
+				{
+					article.ArticleTags.Add(new ArticleTag()
+					{
+						TagId = item,
+						CreatedBy = _currentUser.Id
+					});
+				}
+				_db.ArticleRepository.Create(article);
+				return new ServiceResult();
+			}
+			article.Title = model.Title;
+			article.Content = model.Content;
+			article.ArticleUrl = model.Title.GetArticleURL();
+			article.CoverPictureUrl = model.CoverPictureUrl;
+			article.UserId = _currentUser.Id;
+			article.UpdatedBy = _currentUser.Id;
+			article.Status = ArticleStatusEnum.Published;
+			article.ReadTime = model.ReadTime;
+			article.Summary = model.Summary;
+			//tagler silinip tekrar eklenecek.
+			if (model.TagIds != null)
+			{
+				foreach (var item in model.TagIds)
+				{
+					var artigleTagList = article.ArticleTags.ToList();
+					foreach (var deletedTag in artigleTagList)
+					{
+						_db.ArticleTagRepository.Delete(deletedTag);
+					}
+				}
 			}
 
+			foreach (var item in model.TagIds)
+			{
+				ArticleTag newTag = new ArticleTag()
+				{
+					TagId = item,
+					ArticleId = article.ID,
+					CreatedBy = _currentUser.Id
+				};
+				_db.ArticleTagRepository.Create(newTag);//ok
+			}
 
-			throw new NotImplementedException();
+			return new ServiceResult();
 		}
 
 
@@ -134,28 +219,26 @@ namespace Blog.BLL.Concrete
 			return articleList;
 		}
 
-		public List<ArticleViewModel> GetArticleByTagId(int tagId)
+		public List<ArticleByTagViewModel> GetArticleByTagId(int tagId)
 		{
-			List<ArticleViewModel> articleList = new List<ArticleViewModel>();
-			//var sss = _db.ArticleRepository.GetAll().Where(x=> x.ArticleTags.Any(p=> p.TagId == tagId)).Select(x=> new );
 
-			var query = (from a in _db.ArticleRepository.GetAll()
-						 join at in _db.ArticleTagRepository.GetAll() on a.ID equals at.ArticleId
-						 join t in _db.TagRepository.GetAll() on at.TagId equals t.ID
-						 where (a.Status == ArticleStatusEnum.Published && a.IsDeleted == false && t.ID == tagId)
-						 select new
-						 {
-							 Title = a.Title,
-							 Content = a.Content,
-							 ReadTime = a.ReadTime,
-							 CoverPictureUrl = a.CoverPictureUrl,
-							 UserId = a.UserId,
-							 TagId = t.ID,
-							 TagName = t.TagName,
-							 SearchText = t.SearchText
-						 }).ToList();
+			var articleByTag = _db.ArticleRepository.GetAll().Where(x => x.ArticleTags.Any(p => p.TagId == tagId) && x.Status == ArticleStatusEnum.Published).Select(x => new ArticleByTagViewModel()
+			{
+				ArticleId = x.ID,
+				UserId = x.UserId,
+				Tags = x.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+				Title = x.Title,
+				Content = x.Content.ContentFormat(100),
+				ReadCount = x.ReadCount,
+				ReadTime = x.ReadTime,
+				Likes = x.Likes.Count(),
+				UserPicUrl = x.User.PictureUrl,
+				ArticleCoverPhoto = x.CoverPictureUrl
 
-			return articleList;
+			}).ToList();
+
+
+			return articleByTag;
 		}
 
 

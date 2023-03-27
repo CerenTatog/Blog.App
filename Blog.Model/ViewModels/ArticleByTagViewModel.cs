@@ -8,6 +8,41 @@ namespace Blog.Model.ViewModels
 {
 	public class ArticleByTagViewModel
 	{
-		public int TagId { get; set; }
+		public ArticleByTagViewModel()
+		{
+			this.Tags = new List<TagViewModel>();
+		}
+	    public List<TagViewModel> Tags { get; set; }
+		public string Title { get; set; }
+
+		public string Content { get; set; }
+
+		public int UserId { get; set; }
+
+		public int UserName { get; set; }
+		public int ArticleId { get; set; }
+
+		public int Likes { get; set; }
+
+		public int ReadCount { get; set; }
+
+		public int ReadTime { get; set; }
+
+		public DateTime UpdatedTime { get; set; }
+		public DateTime CreatedTime { get; set; }
+		public string UserPicUrl { get; set; }
+
+		public string ArticleCoverPhoto { get; set; }
+
+
+
+
+
+		
+
+
+
+
+
 	}
 }

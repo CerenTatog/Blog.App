@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Blog.Model.ViewModels
 {
-	public class TagViewModel
+	public class GetArticleByTagRequestModel
 	{
 		public int TagId { get; set; }
-		public string TagName { get; set; }
-
-		public string TagUrl { get; set; }
 	}
 }

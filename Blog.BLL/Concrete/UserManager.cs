@@ -72,16 +72,7 @@ namespace Blog.BLL
 
         public bool AddUserTag(UserTagViewModel model)
         {
-            //var list = (from u in _db.UserRepository.GetAll()
-            //            join ut in _db.UserTagRepository.GetAll() on u.ID equals ut.UserId
-            //            join t in _db.TagRepository.GetAll() on ut.TagId equals t.ID
-            //            select new UserTagViewModel
-            //            {
-            //                TagId = ut.TagId,
-            //                UserId = ut.UserId,
-            //                TagName = t.TagName,
-            //                UserName = u.UserName
-            //            }).ToList();
+            
 
             var userTag = _db.UserTagRepository.GetAll().Where(x=>x.UserId == model.UserId && x.TagId == model.TagId).FirstOrDefault();
             if (userTag == null)

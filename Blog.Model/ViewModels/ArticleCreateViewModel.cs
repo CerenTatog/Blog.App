@@ -15,5 +15,9 @@ namespace Blog.Model.ViewModels
 		public string? CoverPictureUrl { get; set; }
 		public string? Tags { get; set; }
 		public List<int>? TagIds { get; set; }
+		public int ReadTime { get; set; }
+		public DateTime CreatedTime { get; set; }
+		public DateTime UpdatedTime { get; set;}
+
 	}
 }

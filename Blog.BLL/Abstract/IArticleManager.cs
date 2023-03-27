@@ -14,16 +14,18 @@ namespace Blog.BLL
         ArticleViewModel GetArticle(int id);
         ArticleViewModel GetArticle(string url);
 		ServiceResult ArticleAddOrUpdateasDraft(ArticleCreateViewModel model);
-        ArticleViewModel ArticleAddOrUpdateasPublished(Article model);
+		ServiceResult ArticleAddOrUpdateasPublished(ArticleCreateViewModel model);
         bool DeleteArticle(int id);
         ArticleComments AddCommentArticle(CommentsViewModel model);
 
         List<ArticleViewModel> GetMostReadArticles();
         List<ArticleViewModel> GetPopularArticles();
         List<ArticleViewModel> GetArticleBySearchText(string searchText);
-        List<ArticleViewModel> GetArticleByTagId(int tagId);
+        List<ArticleByTagViewModel> GetArticleByTagId(int tagId);
         List<TagViewModel> GetAllTags();
         List<TagViewModel> GetTagsWithSearch(string text);
+
+       
 
 	}
 }

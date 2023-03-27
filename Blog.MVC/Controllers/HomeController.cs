@@ -68,7 +68,7 @@ namespace Blog.MVC.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult GetArticleByTagId([FromBody] ArticleByTagViewModel model)
+		public IActionResult GetArticleByTagId([FromBody] GetArticleByTagRequestModel model)
 		{
 			return ViewComponent("MyTagArticles", new {tagId = model.TagId});
 		}
