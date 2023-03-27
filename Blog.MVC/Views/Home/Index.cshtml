@@ -65,15 +65,17 @@
 </section><!-- End Hero -->
 <br />
 <br />
+<br />
+<br />
+<br />
 
-
-<section id="blog" class="blog">
+<section style="padding: 0 0 40px 0 !important">
 	<div class="container-lg mt-3" data-aos="fade-up">
 		<div class="row">
 			<div class="col-lg-12 entries">
 				<article class="entry mt-lg-5">
-					<h3>Trend Makaleler</h3>
-					@*@await Component.InvokeAsync("TrendArticles")*@
+					<h3 style="text-align:center">Trend Makaleler</h3>
+					@await Component.InvokeAsync("TrendingArticles")
 				</article><!-- End blog entry -->
 			</div><!-- End blog entries list -->
 		</div>
@@ -183,58 +185,6 @@
 						<span class="badge rounded-pill bg-light text-dark">5 dk. Okuma Süresi</span>
 					</div>
 				</div>
-				@*<div class="m-4">
-					<div class="row row-cols-1 row-cols-md-2 g-4">
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card">
-								<img src="/examples/images/thumbnail.svg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h5 class="card-title">Card title</h5>
-									<p class="card-text">Some dummy text to make up the card's content. You can replace it anytime.</p>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">Last updated 5 mins ago</small>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>*@
 			</div>
 
 			<div class="col-lg-4">
@@ -249,17 +199,6 @@
 						</form>
 					</div><!-- End sidebar search formn-->
 
-					<h3 class="sidebar-title">Categories</h3>
-					<div class="sidebar-item categories">
-						<ul>
-							<li><a href="#">General <span>(25)</span></a></li>
-							<li><a href="#">Lifestyle <span>(12)</span></a></li>
-							<li><a href="#">Travel <span>(5)</span></a></li>
-							<li><a href="#">Design <span>(22)</span></a></li>
-							<li><a href="#">Creative <span>(8)</span></a></li>
-							<li><a href="#">Educaion <span>(14)</span></a></li>
-						</ul>
-					</div><!-- End sidebar categories-->
 
 					<h3 class="sidebar-title">Recent Posts</h3>
 					<div class="sidebar-item recent-posts">
@@ -323,3 +262,5 @@
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
 }
+
+

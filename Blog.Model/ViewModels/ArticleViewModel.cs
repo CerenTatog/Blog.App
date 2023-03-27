@@ -17,6 +17,8 @@ namespace Blog.Model.ViewModels
         public int ReadCount { get; set; }
         public int ReadTime { get; set; }
         public int UserId { get; set; }
+        public string UserUrl { get; set; }
+        public int CommentCount { get; set; }
         public string AuthorName { get; set; }
 
         public string UserPicUrl { get; set; }
@@ -30,6 +32,7 @@ namespace Blog.Model.ViewModels
 
         public DateTime? UpdatedTime { get; set; }
         public DateTime? CreatedTime { get; set; }
+        public string CreatedTimeStr { get; set; }
 
 
 

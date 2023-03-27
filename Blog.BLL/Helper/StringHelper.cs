@@ -24,7 +24,7 @@ namespace Blog.BLL.Helper
 			return userUrl;
 		}
 
-		
+
 		public static string GetArticleURL(this string title)
 		{
 			title = title.ToLower().Replace(' ', '-');
@@ -34,10 +34,16 @@ namespace Blog.BLL.Helper
 
 		public static string ContentFormat(this string content, int lenght)
 		{
-			
-			string cleanText = Regex.Replace(content, "<.*?>", string.Empty).Replace("&nbsp;", "").Replace("&nbsp", "").Replace("&", " ");
-			string newContent = cleanText.Substring(0,lenght);
-			return newContent;
+			if (string.IsNullOrWhiteSpace(content))
+			{
+				return "";
+			}
+			//string cleanText = Regex.Replace(content, "<.*?>", string.Empty).Replace("&nbsp;", "").Replace("&nbsp", "").Replace("&", " ");
+			if (content.Length < lenght)
+			{
+				return content;
+			}
+			return content.Substring(0, lenght);
 		}
 
 		public static string GetTagUrl(this string tag)

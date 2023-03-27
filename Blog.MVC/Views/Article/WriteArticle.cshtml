@@ -95,8 +95,18 @@
 			</div>
 
 			<div class="form-group">
+				<label for="name">Kısa Açıklama</label>
+				<input type="text" class="form-control" id="kisaAciklama" placeholder="Kısa Açıklama">
+			</div>
+
+			<div class="form-group">
 				<label>İçerik</label>
 				@Html.TextAreaFor(model => model.Content, new { @id = "editor1" })
+			</div>
+
+			<div class="form-group">
+				<label for="name">Okuma Süresi</label>
+				<input type="number" class="form-control" id="okumaSuresi" placeholder="Okuma Süresi(dk)">
 			</div>
 
 			<div class="form-group">
@@ -209,7 +219,9 @@
 			var data = {
 				Content: CKEDITOR.instances['editor1'].getData(),
 				Tags: $('#tags').val(),
-				Title: $('#baslik').val()
+				Title: $('#baslik').val(),
+				Summary: $('#kisaAciklama').val(),
+				ReadTime: $('#okumaSuresi').val()
 			}
 			var formData = new FormData();
 

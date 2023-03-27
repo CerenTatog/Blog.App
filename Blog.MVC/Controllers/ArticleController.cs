@@ -26,23 +26,13 @@ namespace Blog.MVC.Controllers
 		[HttpGet]
 		public IActionResult WriteArticle()
 		{
-
-			return View(new ArticleViewModel());
-		}
-		[HttpPost]
-		public IActionResult WriteArticle(int id)
-		{
-			//_articleManager.ArticleAddOrUpdateasDraft();
 			return View(new ArticleViewModel());
 		}
 
-		//article'a tıklandığında içeriğinin okunacağa alan. 
-		//tagler altta belirtilecek.
-		//Beğen, yorum yap butonları
-
-		public IActionResult ArticleDetail()
+		public IActionResult ArticleDetail(string articleUrl)
 		{
-			return View();
+			var model = _articleManager.GetArticle(articleUrl);
+			return View(model);
 		}
 		//ViewComponent
 		// Yayınlanan makaleye bağlı yorumlar yer alacak. Kullanıcı giriş yapmışsa yorum yazabilecek. 
@@ -60,9 +50,10 @@ namespace Blog.MVC.Controllers
 		}
 		//Burada kullanıcının takip ettiği tag id ye göre makaleler listelenecek. (sayfa formatı)
 		//Tab kullanımı düşünülebilir. 
-		public IActionResult ArticleByTag()
+		public IActionResult ArticleByTag(string tagUrl)
 		{
-			return View();
+			var model = _articleManager.GetArticleByTagUrl(tagUrl);
+			return View(model);
 
 		}
 
@@ -121,7 +112,9 @@ namespace Blog.MVC.Controllers
 				Title = formData.Title,
 				Content = formData.Content,
 				CoverPictureUrl = resimAd,
-				TagIds = tagIds
+				TagIds = tagIds,
+				Summary = formData.Summary,
+				ReadTime = formData.ReadTime
 			});
 			return Json(result);
 		}

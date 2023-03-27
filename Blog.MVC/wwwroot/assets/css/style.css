@@ -651,7 +651,7 @@ section {
 }
 
     .featured .icon-box {
-        padding: 40px 30px;
+        padding:20px 20px;
         box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
         border-radius: 10px;
         background: #fff;
@@ -685,15 +685,15 @@ section {
             margin-bottom: 0;
         }
 
-        .featured .icon-box:hover {
+        /*.featured .icon-box:hover {
             background: #e96b56;
-        }
+        }*/
 
-            .featured .icon-box:hover i,
+            /*.featured .icon-box:hover i,
             .featured .icon-box:hover h3 a,
             .featured .icon-box:hover p {
                 color: #fff;
-            }
+            }*/
 
 /*--------------------------------------------------------------
 # About
@@ -1535,7 +1535,7 @@ section {
 # Blog
 --------------------------------------------------------------*/
 .blog {
-    padding: 40px 0 20px 0;
+    padding: 0px 0 0px 0;
 }
 
     .blog .entry {

@@ -20,9 +20,10 @@ namespace Blog.MVC.Controllers
         //Herkese açık.
         //Kullanıcının yayınladığı makaleler(tag,başlık, content max.100 karakter)(sağ taraf)
         //Sol atarf kullanıcı resmi ,hakkında bilgisi
-        public IActionResult Profile()
+        public IActionResult Profile(string authorUrl)
         {
-            return View();
+            var model = _userManager.GetProfile(authorUrl);
+            return View(model);
         }
 
         public IActionResult SelectTagList()

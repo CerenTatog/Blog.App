@@ -1,32 +1,32 @@
-﻿@*@model IEnumerable<ArticleViewModel>
-
-<section id="testimonials" class="testimonials">
-    <div class="container">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-4">
-                    <div class="testimonial-item">
-                        <img src="~/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img rounded-circle" alt="">
-                        <h4>@item.AuthorName</h4>
-                        <br />
-                        <h6 class="fw-bold">@item.Title</h6>
-                        <span style="font-size:smaller">
-                            @item.Summary
-                        </span>
-                        <div class="row">
-                            <div class="col-8">
-                                <small class="" style="font-size:x-small">@item.CreatedTime</small>
-                                <small class="" style="font-size:x-small">&#9830</small>
-                                <small class="" style="font-size:x-small"> Okuma Süresi: @item.ReadTime dk</small>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            }
-        </div>
-
-    </div>
-</section>*@<!-- End Testimonials Section -->
+﻿@model IEnumerable<ArticleViewModel>
+<style>
+	.linkBlck{
+		color: black;
+	}
+</style>
+<section style="padding: 0 0 5px 0 !important" id="featured" class="featured">
+	<div class="container">
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-lg-4">
+					<div class="icon-box">
+						<div class="row">
+							<div class="col-2">
+								<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="~/uploads/defaultuserpicture/user (2).png" width="24" height="24" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
+							</div>
+							<div class="col-10">
+								<h6 style="margin-left: -13%; margin-top: 2%;" class="align-item-center">
+									@item.AuthorName
+								</h6>
+							</div>
+						</div>
+						<h5>@Html.RouteLink(item.Title, routeName: "articledetail", routeValues: new { controller = "Article", action = "ArticleDetail", articleUrl = @item.ArticleUrl},new { @class = "linkBlck" })</h5>
+						<p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+						<span style="font-size:x-small;color:#909090" class="">@item.ReadTime min read</span>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</section>

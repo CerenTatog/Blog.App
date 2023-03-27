@@ -25,8 +25,10 @@ namespace Blog.BLL
         List<ArticleByTagViewModel> GetArticleByTagId(int tagId);
         List<TagViewModel> GetAllTags();
         List<TagViewModel> GetTagsWithSearch(string text);
+        List<ArticleViewModel> GetArticleByTagUrl(string tagUrl);
 
-       
+
+
 
 	}
 }

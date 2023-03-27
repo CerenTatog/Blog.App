@@ -201,9 +201,19 @@ namespace Blog.BLL.Concrete
 							   ReadTime = a.ReadTime,
 							   Likes = a.Likes.Count(),
 							   UserPicUrl = a.User.PictureUrl,
-							   CoverPictureUrl = a.CoverPictureUrl
+							   CoverPictureUrl = a.CoverPictureUrl,
+							   Content = a.Content,
+							   CommentCount = a.ArticleComments.Count(),
+							   CreatedTimeStr = a.CreatedDate.Value.ToString("dd MMMM yyyy"),
+							   UserUrl = a.User.ProfileUrl
 
 						   }).FirstOrDefault();
+			var item = _db.ArticleRepository.GetAll().FirstOrDefault(x => x.ArticleUrl == url);
+			if (item != null)
+			{
+				item.ReadCount += 1;
+				_db.ArticleRepository.Update(item);
+			}
 			return article;
 		}
 
@@ -253,6 +263,28 @@ namespace Blog.BLL.Concrete
 			return articleByTag;
 		}
 
+		public List<ArticleViewModel> GetArticleByTagUrl(string tagUrl)
+		{
+
+			var articleByTag = _db.ArticleRepository.GetAll().Where(x => x.ArticleTags.Any(p => p.Tag.TagUrl == tagUrl) && x.Status == ArticleStatusEnum.Published).Select(x => new ArticleViewModel()
+			{
+				UserId = x.UserId,
+				AuthorName = x.User.UserName,
+				ArticleTags = x.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+				Title = x.Title,
+				Summary = x.Summary.ContentFormat(100),
+				ReadCount = x.ReadCount,
+				ReadTime = x.ReadTime,
+				Likes = x.Likes.Count(),
+				UserPicUrl = x.User.PictureUrl,
+				CoverPictureUrl = x.CoverPictureUrl,
+				ArticleUrl = x.ArticleUrl
+			}).ToList();
+
+
+			return articleByTag;
+		}
+
 
 
 		public List<ArticleViewModel> GetMostReadArticles()
@@ -289,7 +321,8 @@ namespace Blog.BLL.Concrete
 										  ReadTime = ar.ReadTime,
 										  Likes = ar.Likes.Count(),
 										  UserPicUrl = ar.User.PictureUrl,
-										  CoverPictureUrl = ar.CoverPictureUrl
+										  CoverPictureUrl = ar.CoverPictureUrl,
+										  ArticleUrl = ar.ArticleUrl
 									  }).OrderByDescending(x => x.Likes).Take(6).ToList();
 
 

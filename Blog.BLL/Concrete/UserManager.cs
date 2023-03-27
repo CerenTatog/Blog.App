@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.BLL.Helper;
 using Blog.DAL.GenericRepository;
 using Blog.Model.Models;
 using Blog.Model.ViewModels;
@@ -106,15 +107,26 @@ namespace Blog.BLL
 
         public UserViewModel GetProfile(string url)
         {
-
             UserViewModel model = new UserViewModel();
             User user = _db.UserRepository.GetAll().FirstOrDefault(x => x.ProfileUrl == url);
             model.UserName = user.UserName;
             model.Email = user.Email;
             model.ProfileDescription = user.ProfileDescription;
             model.PictureUrl = user.PictureUrl;
+            model.Articles = _db.ArticleRepository.GetAll().Where(x=> x.UserId == user.ID).Select(x => new ArticleViewModel()
+            {
+                AuthorName = model.UserName,
+                ArticleTags = x.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
+                Title = x.Title,
+                Summary = x.Summary.ContentFormat(100),
+                ReadCount = x.ReadCount,
+                ReadTime = x.ReadTime,
+                Likes = x.Likes.Count(),
+                UserPicUrl = model.PictureUrl,
+                CoverPictureUrl = x.CoverPictureUrl,
+                ArticleUrl = x.ArticleUrl
+            }).ToList();
             return model;
-
         }
 
         public bool ProfileAddOrUpdate(UserViewModel model)

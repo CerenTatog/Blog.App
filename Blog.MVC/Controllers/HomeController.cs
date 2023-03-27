@@ -34,7 +34,8 @@ namespace Blog.MVC.Controllers
 				Value = "0"
 			});
 
-			TempData["TagList"] = tagList;
+			TempData.Set("key", tagList);
+			//TempData["TagList"] = tagList;
 			UserViewModel user = HttpContext.Session.Get<UserViewModel>("user");
 			if (user == null)
 			{
