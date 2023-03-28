@@ -5,7 +5,7 @@ namespace Blog.BLL
 {
     public interface IAccountManager
     {
-        //bu kısımın dönüş tiplerinden ve alacağı parametrelerden emin değilim. Identity ya da jwt yüklenip yüklenmeyeceğine karar verilmesi gerek. 
+        //Tüm sign in vs. metotlar tanımlanacak. Identity ya da jwt yüklenip yüklenmeyeceğine karar verilmesi gerek. 
         ServiceResult SignIn(UserRegisterViewModel uvm);
         UserViewModel SignOut(UserViewModel uvm);
         ServiceResult Register(UserRegisterViewModel uvm);

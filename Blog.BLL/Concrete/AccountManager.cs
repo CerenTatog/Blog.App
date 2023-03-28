@@ -57,7 +57,7 @@ namespace Blog.BLL
 			{
 				return new ServiceResult("Kullanıcı bulunamadı", ServiceResultState.ERROR);
 			}
-			// session doldur
+			// session'ı doldurmayı unutma!
 			_contextAccessor.HttpContext.Session.Set<UserViewModel>("user", new UserViewModel()
 			{
 				Id = user.ID,
@@ -88,7 +88,7 @@ namespace Blog.BLL
 			};
 			_db.UserRepository.Create(user);
 			string mailLink = $"https://localhost:7219/account/activatedmail/{user.ActivationGuid}";
-			_mailService.SendMail(new List<string>() { model.Email }, "Hesap Aktivasyon", mailLink);
+			_mailService.SendMail(new List<string>() { model.Email }, "Hesap Aktivasyonu Linki", mailLink);
 
 			return new ServiceResult("Başarı ile kayıt yapıldı. Aktivasyon linki mail edresinize gönderildi");
 		}
@@ -108,7 +108,7 @@ namespace Blog.BLL
 			_db.UserRepository.Update(user);
 
 			string mailLink = $"https://localhost:7219/account/signinmail/{user.ActivationGuid}";
-			_mailService.SendMail(new List<string>() { model.Email }, "Hesap Giriş", mailLink);
+			_mailService.SendMail(new List<string>() { model.Email }, "Hesap Giriş Linki", mailLink);
 
 			return new ServiceResult("Giriş linki mail edresinize gönderildi");
 		}
