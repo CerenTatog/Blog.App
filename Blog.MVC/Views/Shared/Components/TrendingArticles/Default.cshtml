@@ -23,7 +23,7 @@
 							</div>
 						</div>
 						<h5>@Html.RouteLink(item.Title, routeName: "articledetail", routeValues: new { controller = "Article", action = "ArticleDetail", articleUrl = @item.ArticleUrl},new { @class = "linkBlck" })</h5>
-						<p>@item.Summary.ContentFormat(60)...</p>
+						<p>@item.Summary.ContentFormat(110)...</p>
 						<span style="font-size:x-small;color:#909090" class="">@item.ReadTime min read</span>
 					</div>
 				</div>
