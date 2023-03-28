@@ -51,7 +51,7 @@ namespace Blog.MVC
 				defaults: new { controller = "Account", action = "SignInMail" });
 
 			app.MapControllerRoute(name: "articledetail",
-				pattern: "article/{articleUrl}",
+				pattern: "articles/{articleUrl}",
 				defaults: new { controller = "Article", action = "ArticleDetail" }
 				);
 

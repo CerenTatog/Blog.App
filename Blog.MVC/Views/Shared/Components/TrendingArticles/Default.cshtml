@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ArticleViewModel>
+﻿@using Blog.BLL.Helper;
+@model IEnumerable<ArticleViewModel>
 <style>
 	.linkBlck{
 		color: black;
@@ -22,7 +23,7 @@
 							</div>
 						</div>
 						<h5>@Html.RouteLink(item.Title, routeName: "articledetail", routeValues: new { controller = "Article", action = "ArticleDetail", articleUrl = @item.ArticleUrl},new { @class = "linkBlck" })</h5>
-						<p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+						<p>@item.Summary.ContentFormat(60)...</p>
 						<span style="font-size:x-small;color:#909090" class="">@item.ReadTime min read</span>
 					</div>
 				</div>

@@ -26,7 +26,7 @@ namespace Blog.MVC.Controllers
 		[HttpGet]
 		public IActionResult WriteArticle()
 		{
-			return View(new ArticleViewModel());
+			return View(new ArticleViewModel());//buraya neden gelmiyor! bilmiyorum vallahi
 		}
 
 		public IActionResult ArticleDetail(string articleUrl)

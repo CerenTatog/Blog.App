@@ -33,8 +33,8 @@ namespace Blog.MVC.Controllers
 				Text = "Sizin İçin",
 				Value = "0"
 			});
-
-			TempData.Set("key", tagList);
+			ViewBag.Taglist = tagList;
+			//TempData.Set("key", tagList);
 			//TempData["TagList"] = tagList;
 			UserViewModel user = HttpContext.Session.Get<UserViewModel>("user");
 			if (user == null)
@@ -74,11 +74,7 @@ namespace Blog.MVC.Controllers
 			return ViewComponent("MyTagArticles", new {tagId = model.TagId});
 		}
 
-		//[HttpPost]
-		//public IActionResult GetTrendArticles()
-		//{
-		//	return ViewComponent("Trending Articles");
-		//}
+
 
 	}
 }

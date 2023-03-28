@@ -73,8 +73,6 @@ namespace Blog.BLL
 
         public bool AddUserTag(UserTagViewModel model)
         {
-            
-
             var userTag = _db.UserTagRepository.GetAll().Where(x=>x.UserId == model.UserId && x.TagId == model.TagId).FirstOrDefault();
             if (userTag == null)
             {
@@ -146,7 +144,6 @@ namespace Blog.BLL
             else
             {
                 user.UserName = model.UserName;
-                //user.ProfileUrl = 
                 user.Email = model.Email;
                 //user.Password = model.Password;
                 user.ProfileDescription = model.ProfileDescription;

@@ -323,7 +323,7 @@ namespace Blog.BLL.Concrete
 										  UserPicUrl = ar.User.PictureUrl,
 										  CoverPictureUrl = ar.CoverPictureUrl,
 										  ArticleUrl = ar.ArticleUrl
-									  }).OrderByDescending(x => x.Likes).Take(6).ToList();
+									  }).OrderByDescending(x => x.Likes).Take(3).ToList();
 
 
 			return popularArticleList;
@@ -366,9 +366,12 @@ namespace Blog.BLL.Concrete
 										ReadTime = ar.ReadTime,
 										Likes = ar.Likes.Count(),
 										UserPicUrl = ar.User.PictureUrl,
-										CoverPictureUrl = ar.CoverPictureUrl
+										CoverPictureUrl = ar.CoverPictureUrl,
+										Content = ar.Content,
+										CommentCount = ar.ArticleComments.Count(),
+										CreatedTimeStr = ar.CreatedDate.Value.ToString("dd MMMM yyyy"),
+										UserUrl = ar.User.ProfileUrl
 									}).OrderByDescending(x => x.Likes).Take(5).ToList();
-
 
 			return latesArticleList;
 		}
