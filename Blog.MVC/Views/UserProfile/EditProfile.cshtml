@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model UserViewModel
 @{
 }
 <style>
@@ -63,205 +61,133 @@
 		box-shadow: none !important;
 	}
 </style>
+<br />
 
 
-<section id="blog" class="blog">
+<section id="blog" class="blog mt-3">
 	<div class="container" data-aos="fade-up">
 
 		<div class="row">
 
-			<div class="col-lg-8 entries">
-
+			<div class="col-lg-8 entries" style="margin-left: 16%;">
 				<article class="entry entry-single">
 					<div class="container">
+						<div class="card-body">
+							<div class="tab-pane active">
+								<h3>Profil Ayarları </h3>
+								<hr>
+								<form>
+									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+									<div class="form-group" style="margin-top:3%">
+										<label for="phone">Profil resmi</label>
+									</div>
+									<div class="justify-content-center">
+										<div class="avatar-upload">
+											<div class="avatar-edit">
+												<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+												<label for="imageUpload"></label>
+											</div>
+											<div class="avatar-preview">
+												<div id="imagePreview">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label asp-for="Email">E-mail Adresin</label>
+										<input asp-for="Email" class="form-control" id="email" placeholder="E-mail adresini değiştir">
+										<small id="usernameHelp" class="form-text text-muted">E-mail adresinle birlikte giriş yapabilirsin.</small>
+										<span asp-validation-for="Email" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label for="username">Kullanıcı Adın</label>
+										<input type="text" class="form-control" id="username" aria-describedby="usernameHelp" readonly value="kennethvaldez">
+										<small id="usernameHelp" class="form-text text-muted"> Kullanıcı adını değiştirdiğinde URL adresin de değişir.Yeni URL adresini aşağıda görebilirsin.</small>
+									</div>
+									<div class="form-group">
+										<label for="url">URL</label>
+										<input type="text" class="form-control" id="url" placeholder="Enter your website address" value="http://benije.ke/pozzivkij" readonly style="background-color:lightgrey">
+									</div>
 
-						<!-- Breadcrumb -->
-						<nav aria-label="breadcrumb" class="main-breadcrumb">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-								<li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Profile Settings</li>
-							</ol>
-						</nav>
-						<!-- /Breadcrumb -->
+									<br />
+									<div class="form-group">
+										<label for="bio">Your Bio</label>
+										<textarea class="form-control autosize" id="about" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"> Kendini anlatan bir şeyler yaz. </textarea>
+									</div>
 
-						<div class="row gutters-sm">
-							<ul class="nav nav-tabs" role="tabpanel">
-								<li class="nav-item">
-									<a class="nav-link active" aria-selected="true" data-toggle="tab" href="#profile">Profil</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" aria-selected="true" data-toggle="tab" href="#account">Hesap</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" aria-selected="true" data-toggle="tab" href="#security">Güvenlik</a>
-								</li>
-							</ul>
-							@*<div class="col-md-4 d-none d-md-block">
-								<div class="card">
-									<div class="card-body">
-										<nav class="nav flex-column nav-pills nav-gap-y-1">
-											<a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Profile Information
-											</a>
-											<a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings mr-2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Account Settings
-											</a>
-											<a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Security
-											</a>
-											<a href="#notification" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell mr-2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>Notification
-											</a>
-											<a href="#billing" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card mr-2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>Billing
-											</a>
-										</nav>
+									<div class="form-group small text-muted">
+										Bu sayfadaki tüm alanlar isteğe bağlıdır ve herhangi bir zamanda silinebilir. Bu alanları doldurarak, bu verileri kullanıcı profilinizin göründüğü her yerde paylaşmamıza izin vermiş olursunuz.
 									</div>
-								</div>
-							</div>*@
-							<div class="col-md-8">
-								<div class="container-fluid">
-									<div class="card-header border-bottom mb-3 d-flex d-md-none">
-										<ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tabpanel">
-											<li class="nav-item">
-												<a href="#profile" data-toggle="tab" class="nav-link has-icon active"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
-											</li>
-											<li class="nav-item">
-												<a href="#account" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
-											</li>
-											<li class="nav-item">
-												<a href="#security" data-toggle="tab" class="nav-link has-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></a>
-											</li>
-											
-										</ul>
+									<button type="button" class="btn rounded-5" style="background-color:#e96b56; color:white" onclick="EditProfile()">Bilgileri Güncelle</button>
+
+								</form>
+								<br />
+								<br />
+								<h3>Hesap Ayarları </h3>
+								<hr>
+								<form>
+									<div class="form-group">
+										<label class="d-block text-danger">Hesabını Sil</label>
+										<p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
 									</div>
-									<div class="card-body tab-content">
-										<div class="tab-pane active" id="profile">
-											
-											<form>
-												<div class="form-group">
-													<label for="fullName">Full Name</label>
-													<input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="Kenneth Valdez">
-													<small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
-												</div>
-												<div class="form-group">
-													<label for="bio">Your Bio</label>
-													<textarea class="form-control autosize" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness.</textarea>
-												</div>
-												<div class="form-group">
-													<label for="url">URL</label>
-													<input type="text" class="form-control" id="url" placeholder="Enter your website address" value="http://benije.ke/pozzivkij">
-												</div>
-												<div class="form-group">
-													<label for="location">Location</label>
-													<input type="text" class="form-control" id="location" placeholder="Enter your location" value="Bay Area, San Francisco, CA">
-												</div>
-												<div class="form-group small text-muted">
-													All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
-												</div>
-												<button type="button" class="btn btn-primary">Update Profile</button>
-												<button type="reset" class="btn btn-light">Reset Changes</button>
-											</form>
-										</div>
-										<div class="tab-pane" id="account">
-											<hr>
-											<form>
-												<div class="form-group">
-													<label for="username">Username</label>
-													<input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="kennethvaldez">
-													<small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
-												</div>
-												<hr>
-												<div class="form-group">
-													<label class="d-block text-danger">Delete Account</label>
-													<p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
-												</div>
-												<button class="btn btn-danger" type="button">Delete Account</button>
-											</form>
-										</div>
-										<div class="tab-pane" id="security">
-											<hr>
-											<form>
-												<div class="form-group">
-													<label class="d-block">Change Password</label>
-													<input type="text" class="form-control" placeholder="Enter your old password">
-													<input type="text" class="form-control mt-1" placeholder="New password">
-													<input type="text" class="form-control mt-1" placeholder="Confirm new password">
-												</div>
-											</form>
-											<hr>
-											<form>
-												<div class="form-group">
-													<label class="d-block">Two Factor Authentication</label>
-													<button class="btn btn-info" type="button">Enable two-factor authentication</button>
-													<p class="small text-muted mt-2">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.</p>
-												</div>
-											</form>
-											<hr>
-											<form>
-												<div class="form-group mb-0">
-													<label class="d-block">Sessions</label>
-													<p class="font-size-sm text-secondary">This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.</p>
-													<ul class="list-group list-group-sm">
-														<li class="list-group-item has-icon">
-															<div>
-																<h6 class="mb-0">San Francisco City 190.24.335.55</h6>
-																<small class="text-muted">Your current session seen in United States</small>
-															</div>
-															<button class="btn btn-light btn-sm ml-auto" type="button">More info</button>
-														</li>
-													</ul>
-												</div>
-											</form>
-										</div>
-										
-									</div>
-								</div>
+									<button class="btn rounded-5" type="button" style="background-color:#e96b56; color:white">Delete Account</button>
+								</form>
 							</div>
 						</div>
-
 					</div>
-
-
 				</article><!-- End blog entry -->
-
 			</div>
-
-
-
-
-
-<div class="col-lg-4">
-	<section id="team" class="team">
-		<div class="container">
-
-			<div class="member">
-				<img src="~/assets/img/team/team-1.jpg" alt="">
-				<h4>Walter White</h4>
-				<span>Chief Executive Officer</span>
-				<p>
-					Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
-				</p>
-				<div class="social">
-					<a href=""><i class="bi bi-twitter"></i></a>
-					<a href=""><i class="bi bi-facebook"></i></a>
-					<a href=""><i class="bi bi-instagram"></i></a>
-					<a href=""><i class="bi bi-linkedin"></i></a>
-				</div>
-			</div>
-
-
 		</div>
-	</section><!-- End Team Section -->
-
-</div>
-
-
-
-	</div><!-- End blog sidebar -->
 	</div>
-
-
-
 </section><!-- End Blog Single Section -->
+@section Scripts{
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+					$('#imagePreview').hide();
+					$('#imagePreview').fadeIn(650);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#imageUpload").change(function () {
+			readURL(this);
+		});
+		function EditProfile(){
+
+			var data = {
+				Email: $('#Email').val(),
+				UserName: $('#baslik').val(),
+				Url: $('#url').val(),
+				About: $('#about').val()
+			}
+			var formData = new FormData();
+
+			formData.append("data", JSON.stringify(data));
+
+			var totalFiles = document.getElementById('imageUpload').files.length;
+			for (var i = 0; i < totalFiles; i++) {
+				var file = document.getElementById('imageUpload').files[i];
+				formData.append("file", file);
+			}
+			$.ajax({
+				type: "POST",
+				url: '/UserProfile/EditProfile',
+				data: formData,
+				dataType: 'json',
+				contentType: false,
+				processData: false,
+				success: function (result) {
+					ShowMessage(result.state, result.message);
+				},
+				error: function (error) {
+					alert("HATA!!!");
+				}
+			});
+		}
+
+	</script>
+}

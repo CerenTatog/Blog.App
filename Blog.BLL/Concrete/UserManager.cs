@@ -135,7 +135,7 @@ namespace Blog.BLL
             if (user == null)
             {
                 user.UserName = model.UserName;
-                //url ne olacak
+                user.ProfileUrl = model.UserURL;
                 user.Email = model.Email;
                 //user.Password = model.Password;
                 user.ProfileDescription = model.ProfileDescription;

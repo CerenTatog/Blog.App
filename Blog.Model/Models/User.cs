@@ -18,7 +18,7 @@ namespace Blog.Model.Models
         public string Email { get; set; }
         public string ProfileUrl { get; set; }
         public bool IsEmailActivated { get; set; }
-        //public string? Password { get; set; }
+        public string? About { get; set; }
         public string? ProfileDescription { get; set; }
         public string? PictureUrl { get; set; }
         public string? ActivationGuid { get; set; }
