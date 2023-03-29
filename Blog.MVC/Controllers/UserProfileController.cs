@@ -87,12 +87,6 @@ namespace Blog.MVC.Controllers
 
 
 
-        //ViewComponent şeklinde sağ tarafta yazarın Profil resmi, ismi, kaç takipçisi, kısa açıklama ve follow/mesaj atma alanları yer alacak. 
-        public IActionResult ProfileComponent()
-        {
-            return View();
-
-        }
 
     }
 }

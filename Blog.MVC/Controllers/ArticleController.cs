@@ -51,7 +51,7 @@ namespace Blog.MVC.Controllers
 
 		}
 		//Burada kullanıcının takip ettiği tag id ye göre makaleler listelenecek. (sayfa formatı)
-		//Tab kullanımı düşünülebilir. 
+		
 		public IActionResult ArticleByTag(string tagUrl)
 		{
 			var model = _articleManager.GetArticleByTagUrl(tagUrl);
