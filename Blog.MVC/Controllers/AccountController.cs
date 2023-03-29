@@ -42,7 +42,7 @@ namespace Blog.MVC.Controllers
 			var result = _accountManager.ActivatedMail(guid);
             if (result.State != Model.Models.ServiceResultState.SUCCESS)
             {
-				return View();
+				return View(new ActivatedMailResponseViewModel());
 			}
 			return View(result.Result);
 		}

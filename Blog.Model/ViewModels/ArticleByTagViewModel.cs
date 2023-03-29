@@ -18,6 +18,7 @@ namespace Blog.Model.ViewModels
 		public string Summary { get; set; }
 
 		public string Content { get; set; }
+		public string ArticleUrl { get; set; }
 
 		public int UserId { get; set; }
 
@@ -32,6 +33,7 @@ namespace Blog.Model.ViewModels
 
 		public DateTime UpdatedTime { get; set; }
 		public DateTime CreatedTime { get; set; }
+		public string CreatedTimeStr { get; set; }
 		public string UserPicUrl { get; set; }
 
 		public string ArticleCoverPhoto { get; set; }

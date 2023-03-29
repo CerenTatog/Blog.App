@@ -8,7 +8,9 @@ namespace Blog.Model.ViewModels
 {
     public class CommentsViewModel
     {
+        public int CommentId { get; set; }
         public string UserName { get; set; }
+        public string DateStr { get; set; }
 
         public string UserProfileFoto { get; set; }
 

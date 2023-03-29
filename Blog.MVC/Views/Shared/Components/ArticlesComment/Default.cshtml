@@ -1,0 +1,23 @@
+﻿@model List<CommentsViewModel>
+<style>
+	.linkBlck {
+		color: black;
+	}
+</style>
+<h4 class="comments-count">@Model.Count() Comments</h4>
+@foreach (var item in Model)
+{
+	<div id="comment-1" class="comment">
+		<div class="d-flex">
+			<div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+			<div>
+				<h5><a href="">@item.UserName</a> <a href="#" class="reply"></a></h5>
+				<time datetime="">@item.DateStr</time>
+				<p>
+					@item.CommentText
+				</p>
+			</div>
+		</div>
+	</div>
+}
+

@@ -69,7 +69,6 @@
 			width: 300px;
 			height: 300px;
 			position: relative;
-			
 			border: 6px solid #F8F8F8;
 			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
 		}
@@ -88,7 +87,7 @@
 <div class="container mt-4 mb-4">
 	<div class="row justify-content-md-center">
 		<div class="col-md-12 col-lg-8">
-			
+
 			<div class="form-group">
 				<label for="name">Başlık</label>
 				<input type="text" class="form-control" id="baslik" placeholder="Başlık">
@@ -122,23 +121,31 @@
 			</div>
 			<div class="justify-content-center">
 				<div class="avatar-upload">
-				<div class="avatar-edit">
-					<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-					<label for="imageUpload"></label>
-				</div>
-				<div class="avatar-preview">
-					<div id="imagePreview">
+					<div class="avatar-edit">
+						<input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+						<label for="imageUpload"></label>
+					</div>
+					<div class="avatar-preview">
+						<div id="imagePreview">
+						</div>
 					</div>
 				</div>
 			</div>
-			</div>
-			
 
-			
-			
+
+
+
 
 			<hr>
-			<button type="button" onclick="CreateArticle()" class="btn btn-primary">Submit</button>
+			<div class="row">
+				@*<div class="col-md-6">
+				<button type="button" class="btn rounded-5" style="background-color:#e96b56; color:white">Taslak olarak Kaydet</button>
+				</div>*@
+				<div class="col-md-6">
+					<button type="button" onclick="CreateArticle()" class="btn rounded-5" style="background-color:#e96b56; color:white">Kaydet ve Yayınla</button>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
@@ -215,7 +222,7 @@
 		});
 
 		function CreateArticle() {
-
+			ShowLoader();
 			var data = {
 				Content: CKEDITOR.instances['editor1'].getData(),
 				Tags: $('#tags').val(),
@@ -240,10 +247,12 @@
 				contentType: false,
 				processData: false,
 				success: function (result) {
+					HideLoader();
 					ShowMessage(result.state, result.message);
 				},
 				error: function (error) {
-					alert("HATA!!!");
+					HideLoader();
+					toastr.error("Hata");
 				}
 			});
 		}

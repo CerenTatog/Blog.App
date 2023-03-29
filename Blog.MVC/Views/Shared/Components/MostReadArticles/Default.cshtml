@@ -1,5 +1,104 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<ArticleViewModel>
+<style>
+
+	.linkBlck {
+		color: black;
+	}
+
+	.entry-footer {
+		padding-top: 10px;
+		border-top: 1px solid #e6e6e6;
+	}
+
+		.entry-footer i {
+			color: #a1a1a1;
+			display: inline;
+		}
+
+		.entry-footer a {
+			color: #616161;
+			transition: 0.3s;
+		}
+
+			.entry-footer a:hover {
+				color: #e96b56;
+			}
+
+		.entry-footer .cats {
+			list-style: none;
+			display: inline;
+			padding: 0 20px 0 0;
+			font-size: 14px;
+		}
+
+			.entry-footer .cats li {
+				display: inline-block;
+			}
+
+		.entry-footer .tags {
+			list-style: none;
+			display: inline;
+			padding: 0;
+			font-size: 14px;
+		}
+
+			.entry-footer .tags li {
+				display: inline-block;
+			}
+
+				.entry-footer .tags li + li::before {
+					padding-right: 6px;
+					color: #6c757d;
+					content: ",";
+				}
+
+		.entry-footer .share {
+			font-size: 16px;
+		}
+
+			.entry-footer .share i {
+				padding-left: 5px;
+			}
+</style>
+@foreach (var item in Model)
+{
+	<div class="card" style="border:hidden">
+		<div class="card-header" style="padding-bottom: initial; border:hidden">
+			<div class="row">
+				<div class="col-2">
+					<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="36" height="36" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
+				</div>
+				<div class="col-10">
+					<h6 style="margin-left: -16%; margin-top: 1%;" class="align-item-center">
+						@item.AuthorName
+					</h6>
+				</div>
+			</div>
+		</div>
+		<div class="row g-0">
+			<div class="col-md-10">
+				<div class="card-body">
+					<h5 class="card-title fw-bold">
+						@Html.RouteLink(item.Title, routeName: "articledetail", routeValues: new { controller = "Article", action = "ArticleDetail", articleUrl = @item.ArticleUrl},new { @class = "linkBlck" })
+					</h5>
+					<p class="card-text">@item.Summary</p>
+				</div>
+			</div>
+			<div class="col-md-2" style="margin-top:4%">
+				<img alt="" class="" src="/uploads/@item.CoverPictureUrl" width="112" height="112" loading="lazy">
+			</div>
+		</div>
+		<div class="entry-footer">
+			<i class="bi bi-tags"></i>
+			<ul class="tags">
+				@foreach (var tag in item.ArticleTags)
+				{
+					<li>@Html.RouteLink(tag.TagName, routeName: "tagdetail", routeValues: new { controller = "Article", action = "ArticleByTag", tagUrl = @tag.TagUrl}/*,new { @class = "linkBlck" }*/)</li>
+				}
+				<li><a>@item.ReadTime dk. Okuma Süresi</a></li>
+			</ul>
+		</div>
+	</div>
+	<hr />
+	<br />
 }

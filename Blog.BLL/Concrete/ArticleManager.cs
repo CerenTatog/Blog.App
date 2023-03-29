@@ -8,6 +8,7 @@ using Blog.DAL.GenericRepository;
 using Blog.Model.Models;
 using Blog.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Blog.BLL.Concrete
 {
@@ -23,13 +24,17 @@ namespace Blog.BLL.Concrete
 			_currentUser = contextAccessor.HttpContext.Session.Get<UserViewModel>("user");
 			_db = db;
 		}
-		public ArticleComments AddCommentArticle(CommentsViewModel model)
+		public ServiceResult AddCommentArticle(AddCommentViewModel model)
 		{
-			//CommentListesi
-			//var comments = from ar in _db.ArticleRepository.GetAll()
-			//               join ac in _db.ArticleCommentRepository.GetAll() on ar.ID equals ac.ArticleId
-			//               join u in _db.ArticleCommentRepository.GetAll() on ac.UserId equals u.ID
-			throw new NotImplementedException();
+			ArticleComments comments = new ArticleComments
+			{
+				ArticleId = model.ArticleId,
+				CommentText = model.Comment,
+				CreatedBy = _currentUser.Id,
+				UserId = _currentUser.Id
+			};
+			_db.ArticleCommentRepository.Create(comments);
+			return new ServiceResult();
 		}
 
 		//articlelist view model gelecek.
@@ -154,7 +159,7 @@ namespace Blog.BLL.Concrete
 				_db.ArticleTagRepository.Create(newTag);//ok
 			}
 
-			return new ServiceResult();
+			return new ServiceResult("İşleminiz başarılı bir şekilde gerçekleştirilmiştir");
 		}
 
 
@@ -192,6 +197,7 @@ namespace Blog.BLL.Concrete
 						   where (a.Status == ArticleStatusEnum.Published && a.IsDeleted == false && a.ArticleUrl == url)
 						   select new ArticleViewModel
 						   {
+							   Id = a.ID,
 							   UserId = a.UserId,
 							   AuthorName = a.User.UserName,
 							   ArticleTags = a.ArticleTags.Select(p => new TagViewModel() { TagId = p.TagId, TagName = p.Tag.TagName, TagUrl = p.Tag.TagUrl }).ToList(),
@@ -243,7 +249,7 @@ namespace Blog.BLL.Concrete
 		public List<ArticleByTagViewModel> GetArticleByTagId(int tagId)
 		{
 
-			var articleByTag = _db.ArticleRepository.GetAll().Where(x => x.ArticleTags.Any(p => p.TagId == tagId) && x.Status == ArticleStatusEnum.Published).Select(x => new ArticleByTagViewModel()
+			var articleByTag = _db.ArticleRepository.GetAll().Where(x => (x.ArticleTags.Any(p => p.TagId == tagId) || tagId == 0) && x.Status == ArticleStatusEnum.Published).Select(x => new ArticleByTagViewModel()
 			{
 				ArticleId = x.ID,
 				UserId = x.UserId,
@@ -255,7 +261,9 @@ namespace Blog.BLL.Concrete
 				ReadTime = x.ReadTime,
 				Likes = x.Likes.Count(),
 				UserPicUrl = x.User.PictureUrl,
-				ArticleCoverPhoto = x.CoverPictureUrl
+				ArticleCoverPhoto = x.CoverPictureUrl,
+				ArticleUrl = x.ArticleUrl,
+				CreatedTimeStr = x.CreatedDate.GetValueOrDefault().ToString("dd MMMM yyyy"),
 
 			}).ToList();
 
@@ -300,7 +308,8 @@ namespace Blog.BLL.Concrete
 				ReadTime = x.ReadTime,
 				Likes = x.Likes.Count(),
 				UserPicUrl = x.User.PictureUrl,
-				CoverPictureUrl = x.CoverPictureUrl
+				CoverPictureUrl = x.CoverPictureUrl,
+				ArticleUrl = x.ArticleUrl
 
 			}).OrderByDescending(x => x.ReadCount).Take(5).ToList();
 			return mostReadingList;
@@ -335,7 +344,8 @@ namespace Blog.BLL.Concrete
 						   select new TagViewModel
 						   {
 							   TagId = t.ID,
-							   TagName = t.TagName
+							   TagName = t.TagName,
+							   TagUrl = t.TagUrl
 						   }).ToList();
 			return tagList;
 
@@ -370,10 +380,26 @@ namespace Blog.BLL.Concrete
 										Content = ar.Content,
 										CommentCount = ar.ArticleComments.Count(),
 										CreatedTimeStr = ar.CreatedDate.Value.ToString("dd MMMM yyyy"),
-										UserUrl = ar.User.ProfileUrl
+										UserUrl = ar.User.ProfileUrl,
+										ArticleUrl = ar.ArticleUrl
 									}).OrderByDescending(x => x.Likes).Take(5).ToList();
 
 			return latesArticleList;
+		}
+
+		public List<CommentsViewModel> GetCommentArticles(int articleId)
+		{
+			var query = (from comment in _db.ArticleCommentRepository.GetAll().Where(x => x.ArticleId == articleId)
+						 join user in _db.UserRepository.GetAll() on comment.UserId equals user.ID
+						 select new CommentsViewModel
+						 {
+							 CommentText = comment.CommentText,
+							 UserName = user.UserName,
+							 UserProfileFoto = user.PictureUrl,
+							 CommentId = comment.ID,
+							 DateStr = comment.CreatedDate.Value.ToString("dd MMMM yyyy")
+						 }).OrderByDescending(x=> x.CommentId).ToList();
+			return query;
 		}
 	}
 }

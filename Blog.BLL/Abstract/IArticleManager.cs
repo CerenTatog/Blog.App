@@ -16,8 +16,9 @@ namespace Blog.BLL
 		ServiceResult ArticleAddOrUpdateasDraft(ArticleCreateViewModel model);
 		ServiceResult ArticleAddOrUpdateasPublished(ArticleCreateViewModel model);
         bool DeleteArticle(int id);
-        ArticleComments AddCommentArticle(CommentsViewModel model);
+		ServiceResult AddCommentArticle(AddCommentViewModel model);
 
+        List<CommentsViewModel> GetCommentArticles(int articleId);
         List<ArticleViewModel> GetMostReadArticles();
         List<ArticleViewModel> GetPopularArticles();
         List<ArticleViewModel> GetLatestArtciles();

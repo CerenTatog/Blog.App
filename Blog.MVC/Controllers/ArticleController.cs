@@ -36,9 +36,11 @@ namespace Blog.MVC.Controllers
 		}
 		//ViewComponent
 		// Yayınlanan makaleye bağlı yorumlar yer alacak. Kullanıcı giriş yapmışsa yorum yazabilecek. 
-		public IActionResult Comments()
+		[HttpPost]
+		public IActionResult AddComments([FromBody] AddCommentViewModel model)
 		{
-			return View();
+			_articleManager.AddCommentArticle(model);
+			return ViewComponent("ArticlesComment", new { articleId = model.ArticleId });
 		}
 
 		//View Component yapısı
@@ -107,7 +109,7 @@ namespace Blog.MVC.Controllers
 			{
 				tagIds = formData.Tags.Split(',').ToList().Select(x => int.Parse(x)).ToList();
 			}
-			var result = _articleManager.ArticleAddOrUpdateasDraft(new ArticleCreateViewModel()
+			var result = _articleManager.ArticleAddOrUpdateasPublished(new ArticleCreateViewModel()
 			{
 				Title = formData.Title,
 				Content = formData.Content,

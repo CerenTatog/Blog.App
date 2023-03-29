@@ -1,0 +1,11 @@
+﻿@model List<TagViewModel>
+<style>
+	.linkBlck {
+		color: black;
+	}
+</style>
+
+@foreach (var tag in Model)
+{
+	<li>@Html.RouteLink(tag.TagName, routeName: "tagdetail", routeValues: new { controller = "Article", action = "ArticleByTag", tagUrl = @tag.TagUrl}/*,new { @class = "linkBlck" }*/)</li>
+}

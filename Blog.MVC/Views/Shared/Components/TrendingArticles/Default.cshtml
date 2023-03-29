@@ -1,8 +1,72 @@
 ﻿@using Blog.BLL.Helper;
 @model IEnumerable<ArticleViewModel>
 <style>
-	.linkBlck{
+
+	.linkBlck {
 		color: black;
+	}
+
+	.entry-footer {
+		padding-top: 10px;
+		border-top: 1px solid #e6e6e6;
+	}
+
+		.entry-footer i {
+			color: #a1a1a1;
+			display: inline;
+		}
+
+		.entry-footer a {
+			color: #616161;
+			transition: 0.3s;
+		}
+
+			.entry-footer a:hover {
+				color: #e96b56;
+			}
+
+		.entry-footer .cats {
+			list-style: none;
+			display: inline;
+			padding: 0 20px 0 0;
+			font-size: 14px;
+		}
+
+			.entry-footer .cats li {
+				display: inline-block;
+			}
+
+		.entry-footer .tags {
+			list-style: none;
+			display: inline;
+			padding: 0;
+			font-size: 14px;
+		}
+
+			.entry-footer .tags li {
+				display: inline-block;
+			}
+
+				.entry-footer .tags li + li::before {
+					padding-right: 6px;
+					color: #6c757d;
+					content: ",";
+				}
+
+		.entry-footer .share {
+			font-size: 16px;
+		}
+
+			.entry-footer .share i {
+				padding-left: 5px;
+			}
+
+	.featured .icon-box i {
+		color: #e96b56;
+		font-size: 18px;
+		margin-bottom: 0;
+		display: contents;
+		line-height: 0;
 	}
 </style>
 <section style="padding: 0 0 5px 0 !important" id="featured" class="featured">
@@ -24,6 +88,16 @@
 						</div>
 						<h5>@Html.RouteLink(item.Title, routeName: "articledetail", routeValues: new { controller = "Article", action = "ArticleDetail", articleUrl = @item.ArticleUrl},new { @class = "linkBlck" })</h5>
 						<p>@item.Summary.ContentFormat(110)...</p>
+						<div class="entry-footer">
+							<i class="bi bi-tags"></i>
+							<ul class="tags">
+								@foreach (var tag in item.ArticleTags)
+								{
+									<li>@Html.RouteLink(tag.TagName, routeName: "tagdetail", routeValues: new { controller = "Article", action = "ArticleByTag", tagUrl = @tag.TagUrl}/*,new { @class = "linkBlck" }*/)</li>
+								}
+								<li><a>@item.ReadTime dk. Okuma Süresi</a></li>
+							</ul>
+						</div>
 						<span style="font-size:x-small;color:#909090" class="">@item.ReadTime min read</span>
 					</div>
 				</div>

@@ -7,6 +7,7 @@
 	.linkBlck {
 		color: black;
 	}
+
 	.entry-footer {
 		padding-top: 10px;
 		border-top: 1px solid #e6e6e6;
@@ -48,13 +49,13 @@
 				display: inline-block;
 			}
 
-				 .entry-footer .tags li + li::before {
+				.entry-footer .tags li + li::before {
 					padding-right: 6px;
 					color: #6c757d;
 					content: ",";
 				}
 
-		 .entry-footer .share {
+		.entry-footer .share {
 			font-size: 16px;
 		}
 
@@ -73,22 +74,34 @@
 		<div class="row">
 			<div class="col-lg-8">
 				@*<div class="blog-author d-flex align-items-center">
-					<img src="assets/img/blog/blog-author.jpg" class="rounded-circle float-left" alt="">
-					<div>
-						<h4>Tag İsmi</h4>
-						<div class="social-links">
-							<a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
-							<a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-							<a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
-							<btn>Beğen</btn>
-						</div>
-						<p>
-							Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
-						</p>
-					</div>*@
+				<img src="assets/img/blog/blog-author.jpg" class="rounded-circle float-left" alt="">
+				<div>
+				<h4>Tag İsmi</h4>
+				<div class="social-links">
+				<a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+				<a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+				<a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+				<btn>Beğen</btn>
+				</div>
+				<p>
+				Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+				</p>
+				</div>*@
 				@foreach (var item in Model)
 				{
 					<div class="card" style="border:hidden">
+						<div class="card-header" style="padding-bottom: initial; border:hidden">
+							<div class="row">
+								<div class="col-2">
+									<img alt="Interview With a Senior C# Developer: Creating a Better Code" class="rounded-circle" src="https://miro.medium.com/v2/resize:fill:123:123/1*1Vcf3mabHyL-nWbedRPokw.jpeg" width="36" height="36" loading="lazy" style="margin-left: -10%;margin-top: -3%;">
+								</div>
+								<div class="col-10">
+									<h6 style="margin-left: -16%; margin-top: 1%;" class="align-item-center">
+										@item.AuthorName
+									</h6>
+								</div>
+							</div>
+						</div>
 						<div class="row g-0">
 							<div class="col-md-10">
 								<div class="card-body">
@@ -140,21 +153,11 @@
 					<h3 class="sidebar-title">Etiketler</h3>
 					<div class="sidebar-item tags">
 						<ul>
-							<li><a href="tag/programlama">Programlama</a></li>
-							<li><a href="tag/kisiselGelisim">Kişisel Gelişim</a></li>
-							<li><a href="tag/teknoloji">Teknoloji</a></li>
-							<li><a href="tag/politika">Politika</a></li>
-							<li><a href="tag/pazarlama">Pazarlama</a></li>
-							<li><a href="tag/yasam">Yaşam</a></li>
-							<li><a href="tag/chatgpt">Chatgpt</a></li>
-							<li><a href="tag/google">Google</a></li>
-							<li><a href="tag/kitaplar">Kitaplar</a></li>
-							<li><a href="tag/twitter">Twitter</a></li>
-							<li><a href="tag/buyukVeri">Buyuk Veri</a></li>
+							@await Component.InvokeAsync("AllTag")
 						</ul>
 					</div><!-- End sidebar tags-->
 
-			</div><!-- End blog sidebar -->
+				</div><!-- End blog sidebar -->
+			</div>
 		</div>
-	</div>
 </section><!-- End Blog Section -->
