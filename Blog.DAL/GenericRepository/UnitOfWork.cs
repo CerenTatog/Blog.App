@@ -20,7 +20,7 @@ namespace Blog.DAL.GenericRepository
         Repository<FollowUsers> FollowUserRepository { get; }
         Repository<Tag> TagRepository { get; }
         Repository<UserTag> UserTagRepository { get; }
-
+         
     }
     public class UnitOfWork : IUnitOfWork
     {

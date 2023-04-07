@@ -81,14 +81,14 @@ namespace Blog.BLL
 			{
 				Email = model.Email,
 				IsEmailActivated = false,
-				//Password = model.Password,// hasleme koyulacak
+				//Password = model.Password,// hasleme koyulmalı
 				ProfileUrl = model.Email.GetUserURLByMail(),
 				UserName = model.Email.GetUserNameByMail(),
 				ActivationGuid = Guid.NewGuid().ToString()
 			};
 			_db.UserRepository.Create(user);
 			string mailLink = $"https://localhost:7219/account/activatedmail/{user.ActivationGuid}";
-			_mailService.SendMail(new List<string>() { model.Email }, "Hesap Aktivasyonu Linki", mailLink);
+			_mailService.SendMail(new List<string>() { model.Email }, "Foresight'e Hoşgeldin! Hesap Aktivasyonu Linki", mailLink);
 
 			return new ServiceResult("Başarı ile kayıt yapıldı. Aktivasyon linki mail edresinize gönderildi");
 		}

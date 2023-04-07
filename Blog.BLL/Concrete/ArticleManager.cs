@@ -156,7 +156,7 @@ namespace Blog.BLL.Concrete
 					ArticleId = article.ID,
 					CreatedBy = _currentUser.Id
 				};
-				_db.ArticleTagRepository.Create(newTag);//ok
+				_db.ArticleTagRepository.Create(newTag);
 			}
 
 			return new ServiceResult("İşleminiz başarılı bir şekilde gerçekleştirilmiştir");

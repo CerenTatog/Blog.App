@@ -11,7 +11,7 @@ namespace Blog.Model.Models
     {
         public int ArticleId { get; set; }
 
-        public int UserId { get; set; }
+        public int UserId { get; set; } 
 
         [ForeignKey("ArticleId")]
         public virtual Article Article { get; set; }
