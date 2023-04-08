@@ -32,7 +32,7 @@ namespace Blog.BLL.Helper
 					mail.IsBodyHtml = true;
 					using (SmtpClient smtp = new SmtpClient())
 					{
-						smtp.Credentials = new NetworkCredential("foresightblog@gmail.com", "qxkcwfuzmsdprwfk");
+						smtp.Credentials = new NetworkCredential("foresightblog@gmail.com", "************");
 						smtp.Port = 587;
 						smtp.Host = "smtp.gmail.com";
 						smtp.EnableSsl = true;
