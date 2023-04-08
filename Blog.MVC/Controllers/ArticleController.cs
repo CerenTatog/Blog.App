@@ -34,8 +34,7 @@ namespace Blog.MVC.Controllers
 			var model = _articleManager.GetArticle(articleUrl);
 			return View(model);
 		}
-		//ViewComponent
-		// Yayınlanan makaleye bağlı yorumlar yer alacak. Kullanıcı giriş yapmışsa yorum yazabilecek. 
+		
 		[HttpPost]
 		public IActionResult AddComments([FromBody] AddCommentViewModel model)
 		{
@@ -43,41 +42,19 @@ namespace Blog.MVC.Controllers
 			return ViewComponent("ArticlesComment", new { articleId = model.ArticleId });
 		}
 
-		//View Component yapısı
-		//Makalenin detail sayfasında yazarın diğer makalelerinin altında yer alacağı yatay bir alan.
+		
 		public IActionResult ArticleByUserId()
 		{
 			return View();
 
 		}
-		//Burada kullanıcının takip ettiği tag id ye göre makaleler listelenecek. (sayfa formatı)
+		
 		
 		public IActionResult ArticleByTag(string tagUrl)
 		{
 			var model = _articleManager.GetArticleByTagUrl(tagUrl);
 			return View(model);
 
-		}
-
-		//View Component
-		//sağ tarafta gösterilecek liste halinde
-		public IActionResult MostReadArticle()
-		{
-			return View();
-		}
-		//View Component
-		//sağ tarafta gösterilecek liste halinde
-		public IActionResult TrendingArticle()
-		{
-			return View();
-		}
-
-		//View Component
-		//sağ tarafta gösterilecek liste halinde
-		//kullanıcının takip etmediği tagler yer alacak. İlgili tag Satfasına yönlendirilecek. 
-		public IActionResult RecommendedTag()
-		{
-			return View();
 		}
 
 		[HttpPost]

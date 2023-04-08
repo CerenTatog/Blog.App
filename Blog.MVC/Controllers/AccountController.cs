@@ -23,7 +23,7 @@ namespace Blog.MVC.Controllers
             return View();
         }
 
-        //Kişinin mail adresi ile birlikte tagler modal olarak seçtirilebilir. 
+        
         public IActionResult Register()
         {
             return View(new UserRegisterViewModel());

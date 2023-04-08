@@ -56,8 +56,7 @@ namespace Blog.MVC.Controllers
 
 		public IActionResult Search()
 		{
-			//burada tablar yer alacak. //makaleler/insanlar/başlık vs.
-			//sağ tarafta topic matching alanı onun altında yazılan text iel ilgili uyuşan profiller
+			
 			return View();
 
 		}

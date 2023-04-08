@@ -37,7 +37,7 @@ namespace Blog.BLL.Concrete
 			return new ServiceResult();
 		}
 
-		//articlelist view model gelecek.
+		
 		public ServiceResult ArticleAddOrUpdateasDraft(ArticleCreateViewModel model)
 		{
 			Article article = _db.ArticleRepository.GetById(model.Id);
@@ -73,7 +73,7 @@ namespace Blog.BLL.Concrete
 			article.Status = ArticleStatusEnum.Draft;
 			article.ReadTime = model.ReadTime;
 			article.Summary = model.Summary;
-			//tagler silinip tekrar eklenecek.
+			
 			if (model.TagIds != null)
 			{
 				foreach (var item in model.TagIds)
@@ -99,7 +99,7 @@ namespace Blog.BLL.Concrete
 			return new ServiceResult();
 		}
 
-		//varsa update alanı olacak.
+		
 		public ServiceResult ArticleAddOrUpdateasPublished(ArticleCreateViewModel model)
 		{
 			Article article = _db.ArticleRepository.GetById(model.Id);
@@ -135,7 +135,7 @@ namespace Blog.BLL.Concrete
 			article.Status = ArticleStatusEnum.Published;
 			article.ReadTime = model.ReadTime;
 			article.Summary = model.Summary;
-			//tagler silinip tekrar eklenecek.
+			
 			if (model.TagIds != null)
 			{
 				foreach (var item in model.TagIds)
@@ -223,7 +223,7 @@ namespace Blog.BLL.Concrete
 			return article;
 		}
 
-		//bakılması lazım. 
+		
 		public List<ArticleViewModel> GetArticleBySearchText(string searchText)
 		{
 			List<ArticleViewModel> articleList = new List<ArticleViewModel>();
@@ -315,7 +315,7 @@ namespace Blog.BLL.Concrete
 			return mostReadingList;
 		}
 
-		public List<ArticleViewModel> GetPopularArticles()//tekrar bakılacak.
+		public List<ArticleViewModel> GetPopularArticles()
 		{
 			var popularArticleList = (from ar in _db.ArticleRepository.GetAll()
 									  where ar.Status == ArticleStatusEnum.Published

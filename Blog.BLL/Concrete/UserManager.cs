@@ -59,7 +59,7 @@ namespace Blog.BLL
             {
                 _db.UserRepository.Delete(user);
 
-                //user a ait article lar pasife alınmak durumunda.
+                
                 var articleList = _db.ArticleRepository.GetAll().Where(x => x.UserId == userId).ToList();
                 foreach (var item in articleList)
                 {

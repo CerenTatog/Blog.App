@@ -24,9 +24,7 @@ namespace Blog.MVC.Controllers
             return View();
         }
 
-        //Herkese açık.
-        //Kullanıcının yayınladığı makaleler(tag,başlık, content max.100 karakter)(sağ taraf)
-        //Sol atarf kullanıcı resmi ,hakkında bilgisi
+       
         public IActionResult Profile(string authorUrl)
         {
             var model = _userManager.GetProfile(authorUrl);
@@ -42,7 +40,7 @@ namespace Blog.MVC.Controllers
         }
 
 
-        //emailadress username-subdomain, profil bilgisi, profile design alanları deleted account ayarlaru
+      
 
         public IActionResult EditProfile(UserViewModel model)
         {
@@ -53,7 +51,7 @@ namespace Blog.MVC.Controllers
             return NotFound();
 
         }
-        //usermanager'a bakılması gerekiyor.
+        
         [HttpPost]
 		public IActionResult EditProfile(IFormFile file, string data)
 		{

@@ -57,7 +57,7 @@ namespace Blog.BLL
 			{
 				return new ServiceResult("Kullanıcı bulunamadı", ServiceResultState.ERROR);
 			}
-			// session'ı doldurmayı unutma!
+			
 			_contextAccessor.HttpContext.Session.Set<UserViewModel>("user", new UserViewModel()
 			{
 				Id = user.ID,
